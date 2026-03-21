@@ -1,0 +1,110 @@
+/* ================= SIDEBAR ================= */
+.sidebar {
+  width: 260px;
+  background: linear-gradient(180deg, var(--bg-sidebar-start), var(--bg-sidebar-end));
+  color: white;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+}
+
+.sidebar.collapsed {
+  width: 70px;
+}
+
+.sidebar.collapsed .nav-submodule,
+.sidebar.collapsed span {
+  display: none;
+}
+
+.sidebar-title {
+  font-size: 18px;
+  font-weight: 700;
+  padding: 16px;
+}
+
+.sidebar-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px;
+}
+
+
+/* ================= MODULE ================= */
+
+.nav-module {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: 0.2s;
+}
+
+.nav-module:hover {
+  background: rgba(99,102,241,0.2);
+}
+
+.active-module {
+  background: rgba(99, 241, 111, 0.35);
+}
+
+/* ================= SUBMENU ================= */
+
+.submenu {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.submenu.open {
+  max-height: 500px;
+}
+
+/* nested spacing */
+.submenu .submenu {
+  padding-left: 8px;
+}
+
+/* ================= SUBMODULE ================= */
+
+.nav-submodule {
+  padding: 8px 16px;
+  font-size: 12px;
+  color: #94a3b8;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+/* ================= PAGE ================= */
+
+.nav-page {
+  padding: 8px 16px;
+  font-size: 13px;
+  color: #94a3b8;
+  display: flex;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: 0.2s;
+}
+
+.nav-page:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+.active-page {
+  background: #6366f1;
+  color: white;
+}
+
+/* ================= CHEVRON ================= */
+.chevron {
+  font-size: 12px;
+  transition: transform 0.2s;
+}
+.chevron.open {
+  transform: rotate(90deg);
+}

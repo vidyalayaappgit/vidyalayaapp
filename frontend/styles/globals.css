@@ -1,0 +1,36 @@
+/* ================= BASE ================= */
+@import "./abstracts/variables.css";
+@import "./abstracts/spacing.css";
+@import "./abstracts/radius.css";
+@import "./abstracts/shadows.css";
+@import "./abstracts/zindex.css";
+@import "./abstracts/breakpoints.css";
+
+/* ================= RESET ================= */
+@import "./base/reset.css";
+@import "./base/base.css";
+@import "./base/typography.css";
+
+/* ================= LAYOUT ================= */
+@import "./layout/layout.css";
+@import "./layout/sidebar.css";
+
+/* ================= COMPONENTS ================= */
+@import "./components/form.css";
+@import "./components/button.css";
+@import "./components/card.css";
+@import "./components/table.css";
+@import "./components/login.css";
+
+/* ================= UTILITIES ================= */
+@import "./utilities/flex.css";
+@import "./utilities/display.css";
+@import "./utilities/text.css";
+@import "./utilities/spacing.css";
+@import "./utilities/state.css";
+
+/* ================= VENDORS ================= */
+@import "./vendors/fontawesome.css";
+
+/* ================= THEMES ================= */
+@import "./themes/light.css";

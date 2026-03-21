@@ -1,0 +1,17 @@
+1)Important Improvement (Performance)
+
+Right now → DB hit per API ❌
+
+✅ Optimize (Next Step)
+
+Fetch all permissions once at login
+
+Store in JWT OR cache
+
+Example:
+
+request.user.permissions = [
+  { formId: 101, controlId: 'SAVE' }
+];
+
+Then guard becomes O(1) instead of DB hit 🔥

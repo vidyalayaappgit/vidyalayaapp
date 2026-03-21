@@ -1,0 +1,46 @@
+cd D:\schoolapp
+npx create-next-app@latest frontend
+✔ TypeScript → Yes
+✔ Tailwind → Yes
+✔ ESLint → Yes
+✔ App Router → Yes
+✔ src folder → Yes
+
+D:\schoolapp
+
+│
+├── backend
+│   ├── src
+│   │   ├── auth
+│   │   ├── navigation
+│   │   ├── users
+│   │   └── database
+│
+└── frontend
+    ├── src
+    │   ├── app
+    │   ├── components
+    │   ├── services
+    │   └── context
+
+
+cd frontend
+npm install axios
+npm install jwt-decode
+npm install zustand
+npm install react-hook-form
+npm install axios
+npm install jwt-decode
+npm install zustand
+npm install react-hook-form
+
+npm run dev
+
+-- Now create the file with below string frontend/.env.local
+NEXT_PUBLIC_API_URL=http://localhost:3000
+
+
+
+--for font enhancement and layout design
+npm install @fortawesome/fontawesome-free
+

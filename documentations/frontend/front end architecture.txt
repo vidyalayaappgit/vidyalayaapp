@@ -1,0 +1,26 @@
+frontend/
+¦
++-- app/
+¦   +-- layout.tsx        ? (root layout)
+¦   ¦
+¦   +-- login/
+¦   ¦   +-- page.tsx      ?
+¦   ¦
+¦   +-- dashboard/
+¦       +-- page.tsx      ?
+¦
++-- modules/
+¦   +-- auth/
+¦       +-- components/
+¦       ¦   +-- LoginForm.tsx
+¦       ¦
+¦       +-- services/
+¦           +-- auth.service.ts
+¦
++-- context/
+¦   +-- AuthContext.tsx
+¦
++-- types/
+¦   +-- auth.types.ts     ? (important)
+¦
++-- .env.local

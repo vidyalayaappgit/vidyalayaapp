@@ -1,0 +1,5 @@
+BACKEND\.env
+
+FRONTEND\.env.local
+
+D:\schoolapp\backend\src\main.ts

@@ -1,0 +1,59 @@
+
+
+nest new backend
+cd backend
+npm install @nestjs/config
+npm install @nestjs/jwt @nestjs/passport passport passport-jwt
+npm install bcrypt
+npm install pg
+npm install class-validator class-transformer
+npm install dotenv
+npm install --save-dev @types/bcrypt
+npm install @nestjs/swagger swagger-ui-express
+
+Now create these below folders and files in src folder in backend
+
+    - no need to create this folder auth and files
+src
+¦
+¦
++-- database
+¦   +-- postgres.service.ts
+¦
+¦
++-- users
+¦
++-- common
+¦   +-- guards
+¦   +-- decorators
+¦
++-- main.ts
+
+
+npm run start:dev
+
+--Now create file backend/.env and enter the db credentials
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=postgres
+DB_PASS=123456
+DB_NAME=schoolapp
+
+JWT_SECRET=schoolappsecret
+
+--delete the folder auth in src if exists
+nest g module auth
+nest g controller auth
+nest g service auth
+
+
+--implementing @nestjs/jwt + Passport.
+npm install @nestjs/jwt @nestjs/passport passport passport-jwt
+npm install --save-dev @types/passport-jwt
+
+
+
+D:\schoolapp\backend>npm install cookie-parser
+D:\schoolapp\backend>npm install -D @types/cookie-parser
+
+

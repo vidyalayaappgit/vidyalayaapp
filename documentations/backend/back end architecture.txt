@@ -1,0 +1,55 @@
+D:\schoolapp\backend\src
+
+src
+│
+├── main.ts
+├── app.module.ts
+│
+├── config
+│   ├── configuration.ts
+│   └── env.validation.ts
+│
+├── database
+│   ├── postgres.service.ts
+│   └── database.module.ts
+│
+├── common
+│   ├── guards
+│   │   ├── jwt.guard.ts
+│   │   └── roles.guard.ts
+│   │
+│   ├── decorators
+│   │   └── roles.decorator.ts
+│   │
+│   ├── filters
+│   │   └── http-exception.filter.ts
+│   │
+│   └── interceptors
+│       └── logging.interceptor.ts
+│
+├── auth
+│   ├── auth.module.ts
+│   ├── auth.controller.ts
+│   ├── auth.service.ts
+│   ├── dto
+│   │   └── login.dto.ts
+│   └── strategies
+│       └── jwt.strategy.ts
+│
+├── navigation
+│   ├── navigation.module.ts
+│   ├── navigation.controller.ts
+│   └── navigation.service.ts
+│
+├── users
+│   ├── users.module.ts
+│   ├── users.controller.ts
+│   └── users.service.ts
+│
+├── students
+│
+├── fees
+│
+├── exams
+│
+└── transport
