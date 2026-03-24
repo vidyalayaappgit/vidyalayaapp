@@ -3,6 +3,7 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { AuthState } from "../types/auth.types";
 import { Module } from "../types/menu.types";
+import { getNavigation } from "@/modules/navigation/services/navigation.service";
 
 interface AuthContextType {
   auth: AuthState;
@@ -26,15 +27,36 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [menu, setMenu] = useState<Module[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
 
+  // 🔥 INITIAL LOAD (FAST FROM CACHE)
+useEffect(() => {
+  const storedAuth = localStorage.getItem("auth");
+  const storedMenu = localStorage.getItem("menu");
+
+  if (storedAuth) {
+    const parsedAuth = JSON.parse(storedAuth);
+    setAuth(parsedAuth);
+  }
+
+  if (storedMenu) {
+    setMenu(JSON.parse(storedMenu));
+  }
+
+  setIsLoaded(true);
+}, []);
+
+  // 🔥 ALWAYS FETCH LATEST MENU FROM BACKEND
   useEffect(() => {
-    const storedAuth = localStorage.getItem("auth");
-    const storedMenu = localStorage.getItem("menu");
-
-    if (storedAuth) setAuth(JSON.parse(storedAuth));
-    if (storedMenu) setMenu(JSON.parse(storedMenu));
-
-    setIsLoaded(true);
-  }, []);
+    if (auth.token) {
+      getNavigation()
+        .then((data) => {
+          setMenu(data);
+          localStorage.setItem("menu", JSON.stringify(data));
+        })
+        .catch(() => {
+          console.error("Navigation load failed");
+        });
+    }
+  }, [auth.token]);
 
   const login = (data: any) => {
     const newAuth: AuthState = {

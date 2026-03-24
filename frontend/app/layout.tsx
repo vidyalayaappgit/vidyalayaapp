@@ -1,6 +1,8 @@
 import { AuthProvider } from "../context/AuthContext";
+import AuthGuard from "@/components/providers/AuthGuard";
 import "./globals.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
+
 export default function RootLayout({
   children,
 }: {
@@ -9,7 +11,11 @@ export default function RootLayout({
   return (
     <html>
       <body>
-        <AuthProvider>{children}</AuthProvider>
+        <AuthProvider>
+          <AuthGuard>
+            {children}
+          </AuthGuard>
+        </AuthProvider>
       </body>
     </html>
   );
