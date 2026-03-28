@@ -1,0 +1,10 @@
+🚀 FINAL ARCHITECTURE (AUTH)
+LoginForm.tsx
+   ↓
+auth.service.ts (API)
+   ↓
+auth.store.ts (state)
+   ↓
+navigation hook
+   ↓
+sidebar

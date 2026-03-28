@@ -1,0 +1,6 @@
+open the command prompt in project folder
+
+git init
+git add .
+git commit "Comment"
+git push

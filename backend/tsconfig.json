@@ -16,10 +16,34 @@
     "baseUrl": "./",
     "incremental": true,
     "skipLibCheck": true,
-    "strictNullChecks": true,
-    "forceConsistentCasingInFileNames": true,
-    "noImplicitAny": false,
-    "strictBindCallApply": false,
-    "noFallthroughCasesInSwitch": false
-  }
+    
+    // ✅ STRICT TYPE CHECKING - Enable these for type safety
+    "strict": true,                           // Enables all strict type-checking options
+    "strictNullChecks": true,                 // Already enabled - good!
+    "strictFunctionTypes": true,              // stricter checking of function types
+    "strictBindCallApply": true,              // Enable strict bind/call/apply checking
+    "strictPropertyInitialization": true,     // Ensure class properties are initialized
+    "noImplicitAny": true,                    // ❗ CHANGE: Disallow 'any' type implicitly
+    "noImplicitThis": true,                   // Raise error on 'this' with implied 'any'
+    "noImplicitReturns": true,                // Report error when not all code paths return a value
+    "noImplicitOverride": true,               // Ensure overriding members are marked with 'override'
+    "noFallthroughCasesInSwitch": true,       // ❗ CHANGE: Prevent fallthrough in switch statements
+    "noUnusedLocals": true,                   // Report errors on unused locals
+    "noUnusedParameters": true,               // Report errors on unused parameters
+    "forceConsistentCasingInFileNames": true, // Already enabled - good!
+    
+    // Additional helpful options
+    "exactOptionalPropertyTypes": true,       // Treat optional properties as exactly that
+    "noPropertyAccessFromIndexSignature": true, // Require using .get() for index signatures
+    
+    // Path aliases for cleaner imports
+    "paths": {
+      "@/*": ["src/*"],
+      "@core/*": ["src/core/*"],
+      "@modules/*": ["src/modules/*"],
+      "@config/*": ["src/config/*"]
+    }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
 }

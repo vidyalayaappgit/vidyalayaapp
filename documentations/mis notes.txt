@@ -1,0 +1,5 @@
+1)tsconfig.json in backend and frontend folders maintain the alias name for folders like '@/core/api/api'
+
+2)for alias path name implementation in the files giving error after adding the same in tsconfig.json still same error then run below
+Ctrl + Shift + P
+→ TypeScript: Restart TS Server

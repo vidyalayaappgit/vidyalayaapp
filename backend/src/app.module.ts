@@ -2,41 +2,52 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 
+// App
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
-import { AuthModule } from './auth/auth.module';
-import { NavigationModule } from './navigation/navigation.module';
-import { ControlsModule } from './controls/controls.module';
-// 🔐 Guards
-import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
-import { PermissionGuard } from './common/guards/permission.guard';
-import { DatabaseModule } from './database/database.module';
-import { TestModule } from './test/test.module';
+// Modules (✅ use aliases)
+import { AuthModule } from '@modules/auth/auth.module';
+import { NavigationModule } from '@modules/navigation/navigation.module';
+import { ControlsModule } from '@modules/controls/controls.module';
 
+// Core
+import { DatabaseModule } from '@core/database/database.module';
+import { JwtAuthGuard } from '@core/guards/jwt-auth.guard';
+import { PermissionGuard } from '@core/guards/permission.guard';
+
+// Config
+import { validate } from '@config/env.config';
 
 @Module({
   imports: [
+    // 🔥 Global Config (validated + cached)
     ConfigModule.forRoot({
-      isGlobal: true, // 🔥 env available everywhere
+      isGlobal: true,
+      envFilePath: ['.env'],
+      cache: true,
+      validate,
     }),
+
+    // 🔥 Core Modules
     DatabaseModule,
+
+    // 🔥 Feature Modules
     AuthModule,
     NavigationModule,
     ControlsModule,
-    TestModule,
   ],
+
   controllers: [AppController],
+
   providers: [
     AppService,
 
-    // ✅ 1. JWT Guard (FIRST)
+    // 🔐 Global Guards (order matters!)
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard,
     },
-
-    // ✅ 2. Permission Guard (SECOND)
     {
       provide: APP_GUARD,
       useClass: PermissionGuard,

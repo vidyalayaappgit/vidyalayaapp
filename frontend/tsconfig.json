@@ -1,34 +1,83 @@
 {
   "compilerOptions": {
+    // 🔹 Target & libs
     "target": "ES2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "noEmit": true,
-    "esModuleInterop": true,
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    // 🔹 Module system (Next.js requirement)
     "module": "esnext",
     "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
+    // 🔹 React / JSX
     "jsx": "react-jsx",
+    // 🔹 Strict Type Safety (VERY IMPORTANT)
+    "strict": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "forceConsistentCasingInFileNames": true,
+    // 🔹 Next.js specific
+    "allowJs": true,
+    "skipLibCheck": true,
+    "noEmit": true,
     "incremental": true,
+    "isolatedModules": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    // 🔹 Base URL (CRITICAL)
+    "baseUrl": ".",
+    // 🔥 PATH ALIASES (FIXED)
+    "paths": {
+      "@/*": [
+        "src/*"
+      ],
+      "@core/*": [
+        "src/core/*"
+      ],
+      "@modules/*": [
+        "src/modules/*"
+      ],
+      "@store/*": [
+        "src/store/*"
+      ],
+      "@shared/*": [
+        "src/shared/*"
+      ],
+      "@components/*": [
+        "src/shared/components/*"
+      ],
+      "@styles/*": [
+        "src/styles/*"
+      ],
+      "@types/*": [
+        "src/types/*"
+      ],
+      "@utils/*": [
+        "src/core/utils/*"
+      ],
+      "@hooks/*": [
+        "src/core/hooks/*"
+      ]
+    },
+    // 🔹 Next.js plugin
     "plugins": [
       {
         "name": "next"
       }
-    ],
-    "paths": {
-      "@/*": ["./*"]
-    }
+    ]
   },
+  // 🔹 Files included
   "include": [
     "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
+    "src/**/*",
     ".next/types/**/*.ts",
-    ".next/dev/types/**/*.ts",
-    "**/*.mts"
+    ".next/dev/types/**/*.ts"
   ],
-  "exclude": ["node_modules"]
+  // 🔹 Exclusions
+  "exclude": [
+    "node_modules"
+  ]
 }

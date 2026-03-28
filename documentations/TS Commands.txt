@@ -1,0 +1,23 @@
+//To start the backend
+npm run start:dev 
+
+//To start the backend
+npm start dev
+
+
+
+
+//To check complete projects errrors
+
+npm run test   
+
+//To build the project
+npm run build
+
+//To fix audit
+npm audit fix
+npm audit fix --force
+
+//Kill the connection
+npx kill-port 3001
+

@@ -1,26 +1,55 @@
-frontend/
-¦
-+-- app/
-¦   +-- layout.tsx        ? (root layout)
-¦   ¦
-¦   +-- login/
-¦   ¦   +-- page.tsx      ?
-¦   ¦
-¦   +-- dashboard/
-¦       +-- page.tsx      ?
-¦
-+-- modules/
-¦   +-- auth/
-¦       +-- components/
-¦       ¦   +-- LoginForm.tsx
-¦       ¦
-¦       +-- services/
-¦           +-- auth.service.ts
-¦
-+-- context/
-¦   +-- AuthContext.tsx
-¦
-+-- types/
-¦   +-- auth.types.ts     ? (important)
-¦
-+-- .env.local
+src/
+├── app/                    # Next.js App Router (routes)
+│
+├── modules/                # 🔥 FEATURE-BASED (like backend)
+│   ├── auth/
+│   │   ├── components/
+│   │   ├── services/
+│   │   ├── hooks/
+│   │   ├── types/
+│   │   └── pages/
+│   │
+│   ├── navigation/
+│   ├── controls/
+│   ├── dashboard/
+│
+├── core/                   # 🔥 SHARED ENGINE (like backend)
+│   ├── api/                # axios/fetch wrapper
+│   ├── config/             # env config
+│   ├── hooks/              # global hooks
+│   ├── utils/
+│   ├── guards/             # route protection
+│   ├── constants/
+│
+├── shared/                 # reusable UI
+│   ├── components/
+│   │   ├── layout/
+│   │   ├── ui/
+│   │   ├── forms/
+│   │
+│   ├── types/
+│
+├── store/                  # 🔥 global state (auth/menu)
+│   ├── auth.store.ts
+│   ├── navigation.store.ts
+│
+├── styles/
+├── public/
+├── types/                  # (optional global)
+
+
+
+
+final architecture
+
+src/
+ ├── shared/
+ │    ├── components/
+ │    │    ├── ui/
+ │    │    ├── layout/
+ │    │    ├── providers/
+ │
+ ├── modules/
+ │    ├── auth/
+ │    ├── navigation/
+ │    ├── form-engine/

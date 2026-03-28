@@ -1,0 +1,15 @@
+src/
+ ├── modules/
+ │    ├── auth/
+ │    ├── users/
+ │    ├── navigation/
+ │    ├── controls/
+ │
+ ├── core/
+ │    ├── database/
+ │    ├── guards/
+ │    ├── decorators/
+ │    ├── interceptors/
+ │
+ ├── config/
+ ├── main.ts
