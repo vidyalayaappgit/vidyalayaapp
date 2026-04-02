@@ -1,42 +1,63 @@
 "use client";
 
 import { useEffect } from "react";
+import { useShallow } from "zustand/react/shallow";
 
+import { getNavigation } from "@modules/navigation/services/navigation.service";
 import { useAuthStore } from "@store/auth.store";
 import { useNavigationStore } from "@store/navigation.store";
 
-import { getNavigation } from "@modules/navigation/services/navigation.service";
+let hasInitializedAuth = false;
+let hasInitializedNavigation = false;
 
 export default function RootInit() {
-  const isLoaded = useAuthStore((s) => s.isLoaded);
-  const loadAuth = useAuthStore((s) => s.loadFromStorage);
+  const { isLoaded, token, loadAuth } = useAuthStore(
+    useShallow((state) => ({
+      isLoaded: state.isLoaded,
+      token: state.auth.token,
+      loadAuth: state.loadFromStorage,
+    }))
+  );
+  const { loadMenu, setMenu } = useNavigationStore(
+    useShallow((state) => ({
+      loadMenu: state.loadFromStorage,
+      setMenu: state.setMenu,
+    }))
+  );
 
-  const loadMenu = useNavigationStore((s) => s.loadFromStorage);
-  const setMenu = useNavigationStore((s) => s.setMenu);
-
-  // ✅ STEP 1: Load auth
   useEffect(() => {
+    if (hasInitializedAuth) return;
+
+    hasInitializedAuth = true;
     loadAuth();
   }, [loadAuth]);
 
-  // ✅ STEP 2: Load navigation (NO TOKEN CHECK ❌)
   useEffect(() => {
-    if (!isLoaded) return;
+    if (!isLoaded || hasInitializedNavigation) return;
 
-    // Load cached menu first
+    hasInitializedNavigation = true;
     loadMenu();
 
-    // Always call API (cookie will handle auth)
-    getNavigation()
-      .then((data) => {
-        console.log("✅ NAV API RESPONSE:", data);
+    if (!token) return;
 
-        setMenu(data);
+    let isActive = true;
+
+    getNavigation()
+      .then((menu) => {
+        if (!isActive) return;
+
+        setMenu(menu);
       })
-      .catch((err) => {
-        console.error("❌ Navigation load failed:", err);
+      .catch((error) => {
+        if (!isActive) return;
+
+        console.error("Navigation load failed:", error);
       });
-  }, [isLoaded, loadMenu, setMenu]);
+
+    return () => {
+      isActive = false;
+    };
+  }, [isLoaded, token, loadMenu, setMenu]);
 
   return null;
 }

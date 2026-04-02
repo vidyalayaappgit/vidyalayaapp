@@ -1,5 +1,6 @@
 import RootInit from '@core/init/RootInit';
 import AuthGuard from '@shared/components/providers/AuthGuard';
+import PageLayout from './PageLayout';  // Import the new PageLayout
 
 import './globals.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
@@ -12,10 +13,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <RootInit /> {/* 🔥 new system */}
-
+        <RootInit />
         <AuthGuard>
-          {children}
+          <PageLayout>  {/* Wrap with PageLayout */}
+            {children}
+          </PageLayout>
         </AuthGuard>
       </body>
     </html>

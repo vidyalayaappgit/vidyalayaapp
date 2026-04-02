@@ -1,0 +1,8 @@
+D:\schoolapp\frontend\src\modules\setup_configuration\academic_setup\academic_year\
+├── academic-year.types.ts          # Shared TypeScript interfaces
+├── academic-year.api.ts            # API service functions
+├── academic-year.hooks.ts          # Custom React hooks
+├── AcademicYearList.tsx            # List/table component
+├── AcademicYearForm.tsx            # Create/Edit form
+├── AcademicYearActions.tsx         # Row actions (edit, delete, authorize)
+└── index.ts                        # Barrel export

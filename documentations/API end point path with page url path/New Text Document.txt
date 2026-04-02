@@ -1,0 +1,17 @@
+Best Practice in Simple Words
+
+API paths are derived from your folder structure, not stored in the database.
+For example:
+api/setup-configuration/academic-setup/academic-year
+
+Database stores only the frontend route (e.g., /setup/academic-years) and the codes (module, submodule, page).
+No need to store the API base path.
+
+Backend provides a single menu endpoint (/api/menu) that returns the full hierarchy with module codes, submodule codes, page codes, and frontend routes.
+
+Frontend loads this menu once, then for each page it constructs the API base path using the codes:
+/api/${moduleCode}/${submoduleCode}/${pageCode}
+
+Both frontend and backend use the same codes, keeping everything consistent and avoiding duplication.
+
+This approach is clean, scalable, and matches your existing folder structure perfectly.

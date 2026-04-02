@@ -1,0 +1,4 @@
+D:\schoolapp\backend\src\modules\setup_configuration\academic_setup\academic_year\
+├── academic-year.types.ts
+├── academic-year.service.ts
+└── index.ts

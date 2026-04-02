@@ -1,0 +1,6 @@
+--For clearing local storage for navigation
+localStorage.removeItem("menu");
+
+--Reload the page
+location.reload()
+

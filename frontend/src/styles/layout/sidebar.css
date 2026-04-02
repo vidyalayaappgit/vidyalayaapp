@@ -43,6 +43,8 @@ background: linear-gradient(
 .nav-page:hover,
 .nav-submodule:hover {
   transform: translateX(2px);
+  background: rgba(59, 130, 246, 0.15);
+  color: #ffffff;
 }
 .sidebar-title {
   display: flex;
@@ -74,6 +76,7 @@ overflow-x: hidden;
   border-radius: 4px;
 }
 
+
 /* ================= MODULE ================= */
 
 /* .nav-module {
@@ -91,6 +94,9 @@ overflow-x: hidden;
 
 .nav-module {
   width: 100%;
+  font-size: 16px; /* FIXED */
+  font-weight: 700; /* BOLD */
+  letter-spacing: 0.5px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -98,7 +104,7 @@ overflow-x: hidden;
   margin-bottom: 2px;
   border: none; /* REMOVE the white borders/backgrounds */
   background: transparent;
-  color: #cbd5e1;
+  color: #e2e8f0;
   border-radius: 8px;
   transition: 0.2s;
 }
@@ -181,8 +187,9 @@ max-height: 1000px;}
   justify-content: space-between;
   padding: 8px 12px 8px 48px; /* Proper indentation */
   margin-top: 4px;
-  font-size: 13px;
-  color: #94a3b8;
+  font-size: 14px; /* FIXED */
+  font-weight: 500;
+  color: #cbd5e1;
   cursor: pointer;
   transition: all 0.2s ease;
 }
@@ -227,11 +234,12 @@ max-height: 1000px;}
 
 .nav-page {
   padding: 8px 12px 8px 52px;
-  font-size: 13px;
+  font-size: 12px;
+  font-weight: 400;
   margin-top: 2px;
   gap: 10px;
   align-items: center;
-  color: #cbd5e1;
+  color: #94a3b8;
   display: flex;
   cursor: pointer;
   border-radius: 8px;

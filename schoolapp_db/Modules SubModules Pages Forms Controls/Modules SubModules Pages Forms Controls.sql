@@ -173,6 +173,28 @@ No routing
 No role access here
 */
 
+DROP TABLE IF EXISTS form_status_master CASCADE;
+
+CREATE TABLE form_status_master (
+    form_id     BIGINT NOT NULL,
+    status_code SMALLINT NOT NULL,
+    status_name VARCHAR(50) NOT NULL,    -- DRAFT, ACTIVE
+    status_desc TEXT,
+    is_active   BOOLEAN DEFAULT TRUE,
+
+    PRIMARY KEY (form_id, status_code),
+
+    CONSTRAINT fk_fsm_page
+        FOREIGN KEY (form_id)
+        REFERENCES forms(id)
+        ON DELETE CASCADE
+);
+select *from form_status_master
+INSERT INTO form_status_master VALUES
+(5, 0, 'DRAFT',   'Draft'),
+(5, 1, 'ACTIVE',  'Active'),
+(5, 2, 'INACTIVE',  'Inactive'),
+(5, 3, 'ARCHIVED',  'Archived')
 
 
 
@@ -426,37 +448,32 @@ WHERE r.role_code = 'schooladminrole';
 
 SELECT *fROM role_page_control_access
 
-DROP TABLE IF EXISTS page_status_master CASCADE;
 
-CREATE TABLE page_status_master (
-    page_id     BIGINT NOT NULL,
+
+DROP TABLE IF EXISTS form_status_master CASCADE;
+
+CREATE TABLE form_status_master (
+    form_id     BIGINT NOT NULL,
     status_code SMALLINT NOT NULL,
     status_name VARCHAR(50) NOT NULL,    -- DRAFT, ACTIVE
     status_desc TEXT,
     is_active   BOOLEAN DEFAULT TRUE,
 
-    PRIMARY KEY (page_id, status_code),
+    PRIMARY KEY (form_id, status_code),
 
-    CONSTRAINT fk_psm_page
-        FOREIGN KEY (page_id)
-        REFERENCES pages(id)
+    CONSTRAINT fk_fsm_page
+        FOREIGN KEY (form_id)
+        REFERENCES forms(id)
         ON DELETE CASCADE
 );
-select *from page_status_master
-INSERT INTO page_status_master VALUES
-(1, 0, 'DRAFT',   'User draft'),
-(1, 1, 'ACTIVE',  'Active user'),
-(1, 2, 'LOCKED',  'Locked due to security'),
-(1, 3, 'INACTIVE','Inactive user'); 
+select *from form_status_master
+INSERT INTO form_status_master VALUES
+(5, 0, 'DRAFT',   'Draft'),
+(5, 1, 'ACTIVE',  'Active'),
+(5, 2, 'INACTIVE',  'Inactive'),
+(5, 3, 'ARCHIVED',  'Archived')
 
-INSERT INTO page_status_master VALUES
-(2, 0, 'DRAFT',   'Draft'),
-(2, 1, 'SUBMITTED',  'Submitted'),
-(2, 2, 'APPROVED',  'Approved'),
-(2, 3, 'REJECTED','Rejected'); 
-
-
-select *From page_status_master
+select *From form_status_master
 --FINAL ARCHITECTURE (LOCK THIS)
 /*
 Navigation:

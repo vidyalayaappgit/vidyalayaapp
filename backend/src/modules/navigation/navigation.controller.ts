@@ -1,7 +1,9 @@
 import {
   Controller,
   Get,
+  Logger,
   Req,
+  UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
 import type { Request } from 'express';
@@ -18,6 +20,8 @@ interface AuthUser {
 
 @Controller('navigation')
 export class NavigationController {
+  private readonly logger = new Logger(NavigationController.name);
+
   constructor(
     private readonly navigationService: NavigationService,
   ) {}
@@ -25,13 +29,22 @@ export class NavigationController {
   @UseGuards(JwtGuard)
   @Get()
   async getNavigation(@Req() req: Request) {
-    const user = req.user as AuthUser;
+    if (!req.user) {
+      this.logger.warn('Navigation request arrived without req.user');
+      throw new UnauthorizedException();
+    }
 
+    const user = req.user as AuthUser;
     const roleId = user.role_id;
-     
-    
- console.log("ROLE ID:", roleId);
+
+    this.logger.log(
+      `Fetching navigation for user:${user.user_id} role:${roleId}`,
+    );
+    this.logger.debug(`Navigation request user payload: ${JSON.stringify(user)}`);
+    this.logger.debug(
+      `Navigation cookie present: ${Boolean(req.cookies?.['authToken'])}`,
+    );
+
     return this.navigationService.getNavigation(roleId);
-    
   }
 }

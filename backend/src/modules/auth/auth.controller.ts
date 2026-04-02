@@ -61,8 +61,6 @@ export class AuthController {
     });
 
     // 🔹 Remove token from response (security best practice)
-    const { access_token, ...responseData } = result;
-
-    return responseData;
+    return result;
   }
 }

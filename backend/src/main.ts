@@ -1,55 +1,87 @@
 import 'tsconfig-paths/register';
-
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import cookieParser from 'cookie-parser';
 import { ValidationPipe } from '@nestjs/common';
-import { HttpExceptionFilter } from '@core/filters/http-exception.filter';
 import { ConfigService } from '@nestjs/config';
+import cookieParser from 'cookie-parser'; // ✅ Remove the * as, import default
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, {
-    logger: ['error', 'warn', 'log', 'debug'],
-  });
+  console.log('🚀 Starting bootstrap process...');
+  
+  try {
+    console.log('📦 Creating Nest application...');
+    const app = await NestFactory.create(AppModule, {
+      logger: ['error', 'warn', 'log', 'debug', 'verbose'],
+    });
+    console.log('✅ Nest application created');
 
-  const configService = app.get(ConfigService);
+    console.log('🔧 Getting ConfigService...');
+    const configService = app.get(ConfigService);
+    console.log('✅ ConfigService retrieved');
 
-  // ✅ Global Exception Filter
-  app.useGlobalFilters(new HttpExceptionFilter());
+    // Cookie Parser
+    console.log('🍪 Setting up cookie parser...');
+    app.use(cookieParser()); // ✅ Now callable
+    console.log('✅ Cookie parser configured');
 
-  // ✅ Cookie Parser
-  app.use(cookieParser());
+    // Validation Pipes
+    console.log('🔧 Setting up validation pipes...');
+    app.useGlobalPipes(
+      new ValidationPipe({
+        whitelist: true,
+        forbidNonWhitelisted: true,
+        transform: true,
+      }),
+    );
+    console.log('✅ Validation pipes configured');
 
-  // ✅ Validation
-  app.useGlobalPipes(
-    new ValidationPipe({
-      whitelist: true,
-      forbidNonWhitelisted: true,
-      transform: true,
-    }),
-  );
+    // CORS
+    console.log('🌐 Setting up CORS...');
+    const frontendUrl = configService.get<string>('FRONTEND_URL') || 'http://localhost:3000';
+    app.enableCors({
+      origin: frontendUrl,
+      credentials: true,
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+      allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+    });
+    console.log(`✅ CORS configured for origin: ${frontendUrl}`);
 
-  // ✅ CORS
-  app.enableCors({
-    origin: 'http://localhost:3000',//origin: configService.get<string>('FRONTEND_URL') ?? 'http://localhost:3000',
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
-   // exposedHeaders: ['Set-Cookie'],
-  });
+    // Global Prefix
+    console.log('📝 Setting global prefix to "api"...');
+    app.setGlobalPrefix('api');
+    console.log('✅ Global prefix set');
 
-  // ✅ Prefix
-  app.setGlobalPrefix('api');
+    // Test database connection
+    console.log('📊 Testing database connection...');
+    try {
+      const pool = app.get('DATABASE_POOL');
+      const client = await pool.connect();
+      console.log('✅ Database connected successfully');
+      client.release();
+    } catch (dbError: any) { // ✅ Type as any
+      console.warn('⚠️  Database connection warning:', dbError?.message);
+      console.warn('⚠️  Continuing without database connection...');
+    }
 
-  // 🔥 TYPE SAFE PORT
-  const port = configService.get<number>('PORT') ?? 3001;
+    const port = configService.get<number>('PORT') || 3001;
+    console.log(`🎯 Attempting to start server on port ${port}...`);
 
-  await app.listen(port);
-
-  console.log(`🚀 School ERP Backend running on http://localhost:${port}`);
+    await app.listen(port);
+    console.log(`✅ Server is running on: http://localhost:${port}`);
+    console.log(`📚 API endpoint: http://localhost:${port}/api`);
+    console.log(`🌐 Frontend URL: ${frontendUrl}`);
+  } catch (error: any) { // ✅ Type as any
+    console.error('❌ Bootstrap failed with error:');
+    console.error(error?.message || error);
+    if (error?.stack) {
+      console.error('Error stack:', error.stack);
+    }
+    process.exit(1);
+  }
 }
 
-bootstrap().catch(err => {
-  console.error('Bootstrap failed:', err);
+bootstrap().catch((err: any) => { // ✅ Type as any
+  console.error('❌ Unhandled promise rejection:');
+  console.error(err?.message || err);
   process.exit(1);
 });
