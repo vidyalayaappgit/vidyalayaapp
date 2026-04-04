@@ -60,7 +60,7 @@ export default function Sidebar() {
       <div className="sidebar-header">
         <div className="sidebar-brand">
           <i className="fa-solid fa-school"></i>
-          <span>School ERP</span>
+          <span>School ERP System</span>
         </div>
         {/* Hamburger Button - When clicked, it toggles the sidebar */}
         <button
