@@ -12,7 +12,7 @@
     "moduleResolution": "bundler",
     // 🔹 React / JSX
     "jsx": "react-jsx",
-    // 🔹 Strict Type Safety (VERY IMPORTANT)
+    // 🔹 Strict Type Safety
     "strict": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
@@ -27,40 +27,18 @@
     "isolatedModules": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    // 🔹 Base URL (CRITICAL)
-    "baseUrl": ".",
-    // 🔥 PATH ALIASES (FIXED)
+    // 🔹 Path mappings (without baseUrl)
     "paths": {
-      "@/*": [
-        "src/*"
-      ],
-      "@core/*": [
-        "src/core/*"
-      ],
-      "@modules/*": [
-        "src/modules/*"
-      ],
-      "@store/*": [
-        "src/store/*"
-      ],
-      "@shared/*": [
-        "src/shared/*"
-      ],
-      "@components/*": [
-        "src/shared/components/*"
-      ],
-      "@styles/*": [
-        "src/styles/*"
-      ],
-      "@types/*": [
-        "src/types/*"
-      ],
-      "@utils/*": [
-        "src/core/utils/*"
-      ],
-      "@hooks/*": [
-        "src/core/hooks/*"
-      ]
+      "@/*": ["./src/*"],
+      "@core/*": ["./src/core/*"],
+      "@modules/*": ["./src/modules/*"],
+      "@store/*": ["./src/store/*"],
+      "@shared/*": ["./src/shared/*"],
+      "@components/*": ["./src/shared/components/*"],
+      "@styles/*": ["./src/styles/*"],
+      "@types/*": ["./src/types/*"],
+      "@utils/*": ["./src/core/utils/*"],
+      "@hooks/*": ["./src/core/hooks/*"]
     },
     // 🔹 Next.js plugin
     "plugins": [

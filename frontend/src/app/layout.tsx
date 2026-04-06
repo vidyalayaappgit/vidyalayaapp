@@ -5,6 +5,10 @@ import PageLayout from './PageLayout';  // Import the new PageLayout
 import './globals.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
+// Use require for CSS files to avoid TypeScript errors
+// require('./globals.css');
+// require('@fortawesome/fontawesome-free/css/all.min.css');
+
 export default function RootLayout({
   children,
 }: {
