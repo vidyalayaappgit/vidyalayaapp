@@ -1,6 +1,143 @@
 /* D:\schoolapp\frontend\src\styles\layout\layout.css */
 
 /* ================= MAIN LAYOUT ================= */
+/* .layout {
+  display: flex;
+  min-height: 100vh;
+} */
+
+/* Main Content Area */
+/* .main-content {
+  flex: 1;
+  margin-left: 330px;
+  margin-top: 70px;
+  transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: #f1f5f9;
+  min-height: calc(100vh - 70px);
+}
+
+.sidebar.collapsed ~ .main-content {
+  margin-left: 70px;
+} */
+
+/* Page Container */
+/* .page-container {
+  padding: 28px 32px;
+  overflow-y: auto;
+  height: calc(100vh - 70px);
+}
+
+.page-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.page-container::-webkit-scrollbar-track {
+  background: #e2e8f0;
+  border-radius: 10px;
+}
+
+.page-container::-webkit-scrollbar-thumb {
+  background: #94a3b8;
+  border-radius: 10px;
+} */
+
+/* Dashboard Title */
+/* .page-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 28px;
+  letter-spacing: -0.3px;
+  position: relative;
+  display: inline-block;
+  padding-right: 20px;
+}
+
+.page-title::after {
+  content: '';
+  position: absolute;
+  bottom: -12px;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #3b82f6, #60a5fa);
+  border-radius: 4px;
+}
+
+/* Glassmorphism Card Effect */
+/* .glass-card {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}  */
+
+/* Dashboard Stats Grid */
+/* .dashboard-stats {
+  display: flex;
+  gap: 24px;
+  margin-top: 32px;
+  flex-wrap: wrap;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 20px;
+  padding: 24px;
+  min-width: 220px;
+  flex: 1;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid #eef2ff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  border-color: #cbd5e1;
+} */
+
+/* Dark Mode Styles for Layout */
+/* [data-theme="dark"] .main-content {
+  background: #0f172a;
+}
+
+[data-theme="dark"] .page-title {
+  color: #f1f5f9;
+}
+
+[data-theme="dark"] .stat-card {
+  background: #1e293b;
+  border-color: #334155;
+  color: #e2e8f0;
+}
+
+[data-theme="dark"] .stat-card:hover {
+  border-color: #475569;
+}
+
+[data-theme="dark"] .page-container::-webkit-scrollbar-track {
+  background: #1e293b;
+}
+
+[data-theme="dark"] .page-container::-webkit-scrollbar-thumb {
+  background: #475569;
+}
+
+/* Add this to your layout.css */
+/* .main-content.collapsed {
+  margin-left: 70px;
+}
+
+.navbar-collapsed {
+  left: 70px;
+}  */
+
+/* added by nishit */
+/* D:\schoolapp\frontend\src\styles\layout\layout.css */
+
+/* ================= MAIN LAYOUT ================= */
 .layout {
   display: flex;
   min-height: 100vh;

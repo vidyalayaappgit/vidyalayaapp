@@ -122,4 +122,15 @@ export class AcademicYearsService {
     const result = await this.coreService.view(data);
     return result;
   }
+
+  /**
+   * Retrieve RBAC/form controls for the Academic Years page.
+   */
+  async getControls(data: { userId: number; schoolId: number }): Promise<string[]> {
+    this.logger.debug(
+      `Fetching academic year controls for user:${data.userId}, school:${data.schoolId}`,
+    );
+
+    return this.coreService.getControls(data);
+  }
 }

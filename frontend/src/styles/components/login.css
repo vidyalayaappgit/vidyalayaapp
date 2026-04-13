@@ -1,5 +1,201 @@
 
 /* ================= LOGIN LAYOUT ================= */
+/* .login-container {
+  display: flex;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1e293b, #4f46e5);
+} */
+
+/* LEFT PANEL */
+/* .login-left {
+  flex: 1;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  color: white;
+} */
+
+/* @media (min-width: 1024px) {
+  .login-left {
+    display: flex;
+  }
+} */
+
+/* .login-brand h1 {
+  font-size: 36px;
+  font-weight: 700;
+} */
+
+/* .login-brand p {
+  margin-top: 10px;
+  color: #cbd5f5;
+} */
+
+/* RIGHT PANEL */
+/* .login-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+} */
+
+
+/* ================= CARD ================= */
+/* .login-card {
+  width: 380px;
+  padding: 36px;
+  background: white;
+  border-radius: 16px;
+
+  box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+} */
+
+
+/* ================= HEADER ================= */
+
+/* .login-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.login-header h2 {
+  font-size: 24px;
+  font-weight: 800; 
+}
+
+.login-header p {
+  color: #94a3b8; 
+  font-size: 14px;
+} */
+
+/* ================= INPUT ================= */
+
+/* .floating-group {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.input-wrapper {
+  position: relative;
+}
+
+.login-input {
+  width: 100%;
+  padding: 14px 12px 14px 38px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 14px;
+
+  transition: all 0.2s ease;
+} */
+
+
+/* LABEL FIX */
+/* .label {
+  margin-bottom: 6px;
+} */
+
+/* FOCUS EFFECT */
+/* .login-input:focus {
+  outline: none;
+  border: 2px solid #6366f1;
+  box-shadow: 0 0 0 3px rgba(99,102,241,0.15);
+} */
+
+/* LABEL */
+/* .floating-group label {
+  position: absolute;
+  left: 38px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: white;
+  padding: 0 4px;
+  font-size: 13px;
+  color: #94a3b8;
+  transition: 0.2s ease;
+} */
+
+/* ACTIVE LABEL */
+/* .login-input:focus + label,
+.floating-group label.active {
+  top: -8px;
+  font-size: 11px;
+  color: #6366f1;
+} */
+
+
+/* ================= OPTIONS ================= */
+
+/* .login-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+  font-size: 13px;
+}
+
+.forgot {
+  color: #6366f1;
+  cursor: pointer;
+}
+
+.forgot:hover {
+  text-decoration: underline;
+}.login-btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  font-weight: 600;
+  color: white;
+
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  transition: all 0.25s ease;
+} */
+
+/* HOVER EFFECT */
+/* .login-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(79,70,229,0.35);
+} */
+
+/* ================= PASSWORD ================= */
+
+/* .toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: #64748b;
+} */
+
+/* ================= FOOTER ================= */
+
+/* .login-footer {
+  text-align: center;
+  margin-top: 16px;
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+@media (min-width: 1024px) {
+  .login-left {
+    display: flex;
+  }
+} */
+
+
+/* adeded by nishit */
+
+/* ================= LOGIN LAYOUT ================= */
 .login-container {
   display: flex;
   min-height: 100vh;

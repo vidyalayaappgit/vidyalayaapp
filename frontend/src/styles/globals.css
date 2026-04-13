@@ -1,46 +1,46 @@
 /* D:\schoolapp\frontend\src\styles\globals.css */
 
 /* ================= BASE ================= */
-@import "./abstracts/variables.css";
+/* @import "./abstracts/variables.css";
 @import "./abstracts/spacing.css";
 @import "./abstracts/radius.css";
 @import "./abstracts/shadows.css";
 @import "./abstracts/zindex.css";
-@import "./abstracts/breakpoints.css";
+@import "./abstracts/breakpoints.css"; */
 
 /* ================= RESET ================= */
-@import "./base/reset.css";
+/* @import "./base/reset.css";
 @import "./base/base.css";
-@import "./base/typography.css";
+@import "./base/typography.css"; */
 
 /* ================= LAYOUT ================= */
-@import "./layout/layout.css";
+/* @import "./layout/layout.css";
 @import "./layout/sidebar.css";
-@import "./layout/navbar.css";
+@import "./layout/navbar.css"; */
 
 /* ================= COMPONENTS ================= */
-@import "./components/form.css";
+/* @import "./components/form.css";
 @import "./components/button.css";
 @import "./components/card.css";
 @import "./components/table.css";
-@import "./components/login.css";
+@import "./components/login.css"; */
 
 /* ================= UTILITIES ================= */
-@import "./utilities/flex.css";
+/* @import "./utilities/flex.css";
 @import "./utilities/display.css";
 @import "./utilities/text.css";
 @import "./utilities/spacing.css";
-@import "./utilities/state.css";
+@import "./utilities/state.css"; */
 
 /* ================= VENDORS ================= */
-@import "./vendors/fontawesome.css";
+/* @import "./vendors/fontawesome.css"; */
 
 /* ================= THEMES ================= */
-@import "./themes/light.css";
-@import "./themes/dark.css";
+/* @import "./themes/light.css";
+@import "./themes/dark.css"; */
 
 /* ================= GLOBAL STYLES ================= */
-* {
+/* * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -52,10 +52,10 @@ body {
   color: var(--text-primary);
   overflow: hidden;
   transition: background-color 0.3s ease, color 0.3s ease;
-}
+} */
 
 /* Utility Classes */
-.text-primary {
+/* .text-primary {
   color: #3b82f6;
 }
 
@@ -65,9 +65,165 @@ body {
 
 .cursor-pointer {
   cursor: pointer;
-}
+} */
 
 /* Smooth Transitions */
-* {
+/* * {
   transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+} */
+
+
+/* added by nishit */
+
+/* D:\schoolapp\frontend\src\styles\globals.css */
+
+/* ================= ABSTRACT FILES ================= */
+@import "./abstracts/variables.css";
+@import "./abstracts/spacing.css";
+@import "./abstracts/radius.css";
+@import "./abstracts/shadows.css";
+
+/* ================= BASE FILES ================= */
+@import "./base/reset.css";
+@import "./base/base.css";
+@import "./base/typography.css";
+
+/* ================= LAYOUT FILES ================= */
+@import "./layout/layout.css";
+@import "./layout/sidebar.css";
+@import "./layout/navbar.css";
+
+/* ================= COMPONENT FILES ================= */
+@import "./components/button.css";
+@import "./components/form.css";
+@import "./components/table.css";
+@import "./components/card.css";
+@import "./components/badges.css";
+@import "./components/modal.css";
+@import "./components/dropdown.css";
+@import "./components/tooltip.css";
+@import "./components/login.css";
+
+/* ================= UTILITY FILES ================= */
+@import "./utilities/flex.css";
+@import "./utilities/display.css";
+@import "./utilities/text.css";
+@import "./utilities/spacing.css";
+@import "./utilities/grid.css";
+@import "./utilities/responsive.css";
+@import "./utilities/state.css";
+
+/* ================= VENDOR FILES ================= */
+@import "./vendors/fontawesome.css";
+
+/* ================= THEME FILES ================= */
+@import "./themes/light.css";
+@import "./themes/dark.css";
+
+/* ================= GLOBAL STYLES ================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-tertiary, #f1f5f9);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gray-400, #94a3b8);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gray-500, #6b7280);
+}
+
+/* Loading Spinner */
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--border-color);
+  border-top-color: var(--primary-500);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Loading State */
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px;
+  gap: 16px;
+}
+
+.loading-state p {
+  color: var(--text-secondary);
+}
+
+/* Error State */
+.error-state {
+  text-align: center;
+  padding: 48px;
+  background: var(--bg-card);
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+}
+
+.error-state i {
+  font-size: 48px;
+  color: var(--danger-500);
+  margin-bottom: 16px;
+}
+
+.error-state h3 {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.error-state p {
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+}
+
+/* Error Alert */
+.error-alert {
+  background: #fef2f2;
+  border-left: 4px solid #ef4444;
+  padding: 12px 16px;
+  border-radius: 8px;
+  color: #dc2626;
+  font-size: 14px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }

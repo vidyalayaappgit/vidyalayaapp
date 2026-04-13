@@ -116,7 +116,13 @@ function useAsyncMutation<TData, TVariables>(
 export function useAcademicYears(params: ListAcademicYearParams): QueryState<{ items: import('./academic-year.types').AcademicYear[]; total: number }> {
   const { apiBasePath } = usePage();
   const schoolId = useSchoolId();
-  const stableParams = useMemo(() => params, [JSON.stringify(params)]);
+  
+  // Memoize params to prevent unnecessary re-renders
+  const stableParams = useMemo(() => ({
+    ...params,
+    schoolId: params.schoolId ?? schoolId,
+  }), [params.schoolId, schoolId, params.limit, params.offset]);
+  
   const [data, setData] = useState<{ items: import('./academic-year.types').AcademicYear[]; total: number }>();
   const [error, setError] = useState<Error | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -128,25 +134,38 @@ export function useAcademicYears(params: ListAcademicYearParams): QueryState<{ i
       return;
     }
 
+    if (!stableParams.schoolId) {
+      // Don't set error, just return empty data
+      setData({ items: [], total: 0 });
+      setIsLoading(false);
+      return;
+    }
+
     setIsLoading(true);
     setError(null);
 
     try {
-      const result = await getAcademicYears(apiBasePath, {
-        ...stableParams,
-        schoolId: stableParams.schoolId ?? schoolId,
-      });
+      console.log('Fetching academic years with params:', stableParams);
+      const result = await getAcademicYears(apiBasePath, stableParams);
+      console.log('Fetched result:', result);
       setData(result);
     } catch (queryError: unknown) {
+      console.error('Error fetching academic years:', queryError);
       setError(toError(queryError));
+      setData({ items: [], total: 0 });
     } finally {
       setIsLoading(false);
     }
   }, [apiBasePath, stableParams]);
 
   useEffect(() => {
-    void refetch();
-  }, [refetch]);
+    if (stableParams.schoolId) {
+      refetch();
+    } else {
+      setIsLoading(false);
+      setData({ items: [], total: 0 });
+    }
+  }, [refetch, stableParams.schoolId]);
 
   return { data, error, isLoading, refetch };
 }
@@ -177,8 +196,10 @@ export function useAcademicYear(id: number | undefined): QueryState<import('./ac
 
     try {
       const result = await getAcademicYearById(apiBasePath, id);
+      console.log('Fetched single academic year:', result);
       setData(result);
     } catch (queryError: unknown) {
+      console.error('Error fetching academic year:', queryError);
       setError(toError(queryError));
     } finally {
       setIsLoading(false);

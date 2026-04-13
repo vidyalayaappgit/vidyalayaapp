@@ -13,9 +13,9 @@ interface AcademicYearActionsProps {
 }
 
 const AcademicYearActions: React.FC<AcademicYearActionsProps> = ({ year, onEdit, onDelete, onAuthorize }) => {
-  const canEdit = year.status_name === 'DRAFT';
-  const canAuthorize = year.status_name === 'DRAFT';
-  const canDelete = year.status_name === 'DRAFT' && !year.is_current;
+  const canEdit = year.status === 'DRAFT';
+  const canAuthorize = year.status === 'DRAFT';
+  const canDelete = year.status === 'DRAFT' && !year.isCurrent;
 
   return (
     <div className="flex space-x-2">

@@ -50,6 +50,7 @@
   // 🔹 Files included
   "include": [
     "next-env.d.ts",
+    "types/**/*",
     "src/**/*",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"

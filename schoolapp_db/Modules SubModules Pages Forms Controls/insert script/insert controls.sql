@@ -171,4 +171,11 @@ INSERT INTO controls VALUES
 (DEFAULT,'refresh','Refresh','READ',82,1,1,NOW(),NULL,NULL);
 
 
+insert into controls
+select 83,'activate','Activate','WRITE',83,1,1,now(),null,null
+
+
+
+insert into controls
+select 84,'deactivate','DeActivate','WRITE',83,1,1,now(),null,null
 select *From controls

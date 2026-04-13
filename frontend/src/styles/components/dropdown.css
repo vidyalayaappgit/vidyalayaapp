@@ -1,0 +1,101 @@
+/* Dropdown Container */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Trigger */
+.dropdown-trigger {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: var(--spacing-2);
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  min-width: 200px;
+  z-index: var(--z-dropdown);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all var(--transition-base);
+}
+
+.dropdown-menu.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Dropdown Positions */
+.dropdown-menu-right { left: auto; right: 0; }
+.dropdown-menu-center { left: 50%; transform: translateX(-50%) translateY(-10px); }
+.dropdown-menu-center.show { transform: translateX(-50%) translateY(0); }
+.dropdown-menu-top { bottom: 100%; top: auto; margin-top: 0; margin-bottom: var(--spacing-2); transform: translateY(10px); }
+.dropdown-menu-top.show { transform: translateY(0); }
+
+/* Dropdown Items */
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-2) var(--spacing-4);
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: background var(--transition-base);
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  background: var(--hover-bg);
+}
+
+.dropdown-item i {
+  width: 20px;
+  color: var(--text-tertiary);
+  font-size: var(--font-size-base);
+}
+
+.dropdown-divider {
+  height: 1px;
+  background: var(--border-color);
+  margin: var(--spacing-2) 0;
+}
+
+.dropdown-header {
+  padding: var(--spacing-2) var(--spacing-4);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.dropdown-item.active {
+  background: var(--primary-50);
+  color: var(--primary-600);
+}
+
+.dropdown-item.active i {
+  color: var(--primary-500);
+}
+
+.dropdown-item:active {
+  background: var(--primary-500);
+  color: white;
+}
+
+.dropdown-item.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}

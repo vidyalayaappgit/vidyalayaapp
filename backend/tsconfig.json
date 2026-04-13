@@ -14,29 +14,24 @@
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
+    "rootDir": "./src",
     "incremental": true,
     "skipLibCheck": true,
-    
-    // ✅ STRICT TYPE CHECKING - Enable these for type safety
-    "strict": true,                           // Enables all strict type-checking options
-    "strictNullChecks": true,                 // Already enabled - good!
-    "strictFunctionTypes": true,              // stricter checking of function types
-    "strictBindCallApply": true,              // Enable strict bind/call/apply checking
-    "strictPropertyInitialization": true,     // Ensure class properties are initialized
-    "noImplicitAny": true,                    // ❗ CHANGE: Disallow 'any' type implicitly
-    "noImplicitThis": true,                   // Raise error on 'this' with implied 'any'
-    "noImplicitReturns": true,                // Report error when not all code paths return a value
-    "noImplicitOverride": true,               // Ensure overriding members are marked with 'override'
-    "noFallthroughCasesInSwitch": true,       // ❗ CHANGE: Prevent fallthrough in switch statements
-    "noUnusedLocals": true,                   // Report errors on unused locals
-    "noUnusedParameters": true,               // Report errors on unused parameters
-    "forceConsistentCasingInFileNames": true, // Already enabled - good!
-    
-    // Additional helpful options
-    "exactOptionalPropertyTypes": true,       // Treat optional properties as exactly that
-    "noPropertyAccessFromIndexSignature": true, // Require using .get() for index signatures
-    
-    // Path aliases for cleaner imports
+    "strict": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "noImplicitReturns": true,
+    "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "forceConsistentCasingInFileNames": true,
+    "exactOptionalPropertyTypes": true,
+    "noPropertyAccessFromIndexSignature": true,
     "paths": {
       "@/*": ["src/*"],
       "@core/*": ["src/core/*"],

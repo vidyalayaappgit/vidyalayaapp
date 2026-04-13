@@ -4,17 +4,31 @@
  * Represents an academic year as returned by the backend.
  * Matches the backend AcademicYearRecord.
  */
+export interface AcademicYearDB {
+  out_id: number;
+  out_school_id: number;
+  out_year_name: string;
+  out_year_code: string;
+  out_start_date: string;
+  out_end_date: string;
+  out_is_current: boolean;
+  out_status_name: string;
+  out_created_dt: string;
+  out_updated_dt: string;
+}
+
+
 export interface AcademicYear {
-  id: number | null;
-  school_id: number | null;
-  year_code: string | null;
-  year_name: string | null;
-  start_date: string | null;   // ISO date string
-  end_date: string | null;
-  is_current: boolean | null;
-  status_name: string | null;   // 'DRAFT', 'ACTIVE', etc.
-  created_dt: string | null;
-  updated_dt: string | null;
+  id: number;
+  schoolId: number;
+  yearName: string;
+  yearCode: string;
+  startDate: string;
+  endDate: string;
+  isCurrent: boolean;
+  status: string;  // Will be 'FRESH' or 'AUTHORISED' from database
+  createdDt?: string;
+  updatedDt?: string;
   message?: string | null;
 }
 
@@ -49,17 +63,27 @@ export interface UpdateAcademicYearPayload {
  */
 export interface ListAcademicYearParams {
   schoolId?: number;
-  statusFilter?: string;
-  includeInactive?: boolean;
   limit?: number;
   offset?: number;
 }
 
 /**
- * Response from a single-record operation (create, update, delete, authorize).
+ * Generic API envelopes coming from the backend.
  */
-export interface SingleRecordResponse {
+export interface ListAcademicYearResponse {
+  success: boolean;
+  items: AcademicYear[];
+  total: number;
+  message?: string | null;
+}
+
+export interface SingleAcademicYearResponse {
   success: boolean;
   data?: AcademicYear;
-  message?: string;
+  message?: string | null;
+}
+
+export interface BasicResponse {
+  success: boolean;
+  message?: string | null;
 }

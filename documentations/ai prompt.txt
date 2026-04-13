@@ -1,0 +1,68 @@
+I am in the development of  schoolapp using the postgresql+nest+next application
+
+I have file structure like below
+Postgresql db : schoolapp_db
+D:\schoolapp\backend(nest thin apis)
+D:\schoolapp\frontend(next pages)
+in Front end folder i have one globals.css which is importing multiple css files like below
+D:.
+│   globals.css
+│
+├───abstracts
+│       breakpoints.css
+│       radius.css
+│       shadows.css
+│       spacing.css
+│       variables.css
+│       zindex.css
+│
+├───base
+│       base.css
+│       reset.css
+│       typography.css
+│
+├───components
+│       academic-year.css
+│       button.css
+│       card.css
+│       dropdown.css
+│       feedback.css
+│       form.css
+│       login.css
+│       modal.css
+│       table.css
+│
+├───layout
+│       grid.css
+│       header.css
+│       layout.css
+│       navbar.css
+│       sidebar.css
+│
+├───pages
+│       dashboard.css
+│       exams.css
+│       students.css
+│
+├───themes
+│       dark.css
+│       light.css
+│       variables.css
+│
+├───utilities
+│       display.css
+│       flex.css
+│       spacing.css
+│       state.css
+│       text.css
+│
+└───vendors
+        fontawesome.css
+
+ 
+and login page is already working using the function+user table from postgresql 
+and sidebar already launched with module-->submodule->page 
+when click on page we will get the main form open with rbac buttons like Save,Delete,Authorise etc 
+please see my first page which i have already developed as attached
+in the path front :D:\schoolapp\frontend\src\modules\system_setup\academic_setup\academic_years
+backend:

@@ -35,7 +35,17 @@ VALUES
 ('STATE','State','State master'),
 ('CITY','City','City master');
 
+INSERT INTO common_master_types (type_code, type_name, description)
+VALUES
+('ACADEMIC_LEVEL','Academic Level','Academic Level')
 
+-- Insert Building Type into common_master_types
+INSERT INTO common_master_types (type_code, type_name, description)
+VALUES ('BUILDING', 'Building Name', 'School building/master list')
+ON CONFLICT (type_code) DO NOTHING;
+
+
+select *From common_master_types
 
 
 CREATE TABLE common_master_values
@@ -241,3 +251,63 @@ FROM common_master_values v
 JOIN common_master_types t
 ON t.id = v.type_id
 ORDER BY t.type_code;
+
+
+ -- e.g., "Pre-Primary","Primary", "Upper-Primary", "Secondary","Higher Secondary"
+
+INSERT INTO common_master_values (type_id,value_code,value_name)
+SELECT id,'PRE-PRIMARY','Pre-Primary'
+FROM common_master_types
+WHERE type_code='ACADEMIC_LEVEL';
+
+INSERT INTO common_master_values (type_id,value_code,value_name)
+SELECT id,'LOWER-PRIMARY','Lower-Primary'
+FROM common_master_types
+WHERE type_code='ACADEMIC_LEVEL';
+
+
+INSERT INTO common_master_values (type_id,value_code,value_name)
+SELECT id,'UPPER-PRIMARY','Upper-Primary'
+FROM common_master_types
+WHERE type_code='ACADEMIC_LEVEL';
+
+
+INSERT INTO common_master_values (type_id,value_code,value_name)
+SELECT id,'SECONDARY','Secondary'
+FROM common_master_types
+WHERE type_code='ACADEMIC_LEVEL';
+
+
+INSERT INTO common_master_values (type_id,value_code,value_name)
+SELECT id,'HIGHER SECONDARY','Higher Secondary'
+FROM common_master_types
+WHERE type_code='ACADEMIC_LEVEL';
+
+
+
+-- Insert building values without description column
+INSERT INTO common_master_values (type_id, value_code, value_name )
+SELECT 
+    cmt.id,
+    building_data.value_code,
+    building_data.value_name
+FROM common_master_types cmt
+CROSS JOIN (
+    VALUES 
+        ('MAIN_BUILDING', 'Main Building'),
+        ('SCIENCE_BLOCK', 'Science Block'),
+        ('COMMERCE_BLOCK', 'Commerce Block'),
+        ('ARTS_BLOCK', 'Arts Block'),
+        ('JUNIOR_WING', 'Junior Wing'),
+        ('SENIOR_WING', 'Senior Wing'),
+        ('LIBRARY_BLOCK', 'Library Block'),
+        ('SPORTS_COMPLEX', 'Sports Complex'),
+        ('AUDITORIUM', 'Auditorium'),
+        ('ADMIN_BLOCK', 'Admin Block'),
+        ('HOSTEL_BLOCK', 'Hostel Block'),
+        ('CANTEEN', 'Canteen'),
+        ('COMPUTER_BLOCK', 'Computer Block'),
+        ('WORKSHOP', 'Workshop'),
+        ('ANNEXE', 'Annexe Building')
+) AS building_data(value_code, value_name)
+WHERE cmt.type_code = 'BUILDING';

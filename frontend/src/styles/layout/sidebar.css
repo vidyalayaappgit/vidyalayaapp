@@ -1,4 +1,423 @@
 /* D:\schoolapp\frontend\src\styles\layout\sidebar.css */
+/* 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+} */
+
+/* ================= SIDEBAR ================= */
+/* .sidebar {
+  width: 330px;
+  height: 100vh;
+  background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+  color: #cbd5e1;
+  display: flex;
+  flex-direction: column;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 100;
+  overflow-x: hidden;
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.sidebar.collapsed {
+  width: 70px;
+} */
+
+/* Sidebar Header with Hamburger */
+/* .sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 16px;
+  border-bottom: 1px solid rgba(71, 85, 105, 0.3);
+  margin-bottom: 20px;
+  background: rgba(2, 6, 23, 0.2);
+  min-height: 70px;
+}
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 700;
+  font-size: 18px;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.sidebar-brand i {
+  font-size: 24px;
+  color: #3b82f6;
+  min-width: 32px;
+}
+
+.sidebar-brand span {
+  transition: opacity 0.3s ease;
+}
+
+.sidebar.collapsed .sidebar-brand span {
+  opacity: 0;
+  width: 0;
+  display: none;
+} */
+
+/* Animated Hamburger inside Sidebar */
+/* .sidebar-hamburger {
+  background: rgba(255, 255, 255, 0.05);
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.sidebar-hamburger:hover {
+  background: rgba(59, 130, 246, 0.2);
+}
+
+.hamburger-box {
+  width: 20px;
+  height: 16px;
+  display: inline-block;
+  position: relative;
+}
+
+.hamburger-inner {
+  width: 100%;
+  height: 2px;
+  background-color: #ffffff;
+  position: absolute;
+  left: 0;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.hamburger-inner:nth-child(1) {
+  top: 0;
+}
+
+.hamburger-inner:nth-child(2) {
+  top: 7px;
+}
+
+.hamburger-inner:nth-child(3) {
+  top: 14px;
+} */
+
+/* Active state - X shape */
+/* .sidebar-hamburger.active .hamburger-inner:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.sidebar-hamburger.active .hamburger-inner:nth-child(2) {
+  opacity: 0;
+  transform: scale(0);
+}
+
+.sidebar-hamburger.active .hamburger-inner:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Scrollable Content */
+/* .sidebar-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 8px 12px;
+}
+
+.sidebar-content::-webkit-scrollbar {
+  width: 4px;
+}
+
+.sidebar-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar-content::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.5);
+  border-radius: 4px;
+}  */
+
+/* ================= MODULE STYLES ================= */
+/* .nav-module {
+  width: 100%;
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  margin-bottom: 4px;
+  background: transparent;
+  color: #cbd5e1;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+  white-space: nowrap;
+}
+
+.nav-module span {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nav-module i {
+  width: 24px;
+  text-align: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.nav-module:hover {
+  background: rgba(59, 130, 246, 0.12);
+  transform: translateX(2px);
+  color: #ffffff;
+}
+
+.active-module {
+  background: rgba(59, 130, 246, 0.12);
+  color: #60a5fa;
+  position: relative;
+}
+
+.active-module::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 8px;
+  bottom: 8px;
+  width: 3px;
+  border-radius: 4px;
+  background: #3b82f6;
+  box-shadow: 0 0 8px rgba(59, 130, 246, 0.5);
+} */
+
+/* ================= SUBMODULE STYLES ================= */
+/* .nav-submodule {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px 10px 48px;
+  margin-top: 2px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #94a3b8;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 10px;
+  white-space: nowrap;
+}
+
+.nav-submodule span {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nav-submodule i {
+  width: 24px;
+  font-size: 14px;
+}
+
+.nav-submodule:hover {
+  background: rgba(51, 65, 85, 0.7);
+  color: #ffffff;
+} */
+
+/* ================= PAGE STYLES ================= */
+/* .nav-page {
+  padding: 8px 12px 8px 64px;
+  font-size: 12px;
+  font-weight: 400;
+  margin-top: 2px;
+  gap: 12px;
+  align-items: center;
+  color: #94a3b8;
+  display: flex;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.nav-page i {
+  width: 24px;
+  font-size: 13px;
+}
+
+.nav-page:hover {
+  background: rgba(51, 65, 85, 0.6);
+  color: #f1f5f9;
+}
+
+.active-page {
+  background: rgba(59, 130, 246, 0.12);
+  color: #60a5fa;
+  position: relative;
+}
+
+.active-page::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 6px;
+  bottom: 6px;
+  width: 3px;
+  border-radius: 4px;
+  background: #3b82f6;
+} */
+
+/* ================= SUBMENU COLLAPSE ================= */
+/* .submenu {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+
+.submenu.open {
+  max-height: 500px;
+  transition: max-height 0.5s ease-in;
+} */
+
+/* ================= CHEVRON ROTATION ================= */
+/* .fa-chevron-right {
+  transition: transform 0.3s ease;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+.rotate {
+  transform: rotate(90deg);
+}
+
+/* Hide text when collapsed */
+/* .sidebar.collapsed .nav-module span span,
+.sidebar.collapsed .nav-submodule span,
+.sidebar.collapsed .nav-page span,
+.sidebar.collapsed .chevron-icon {
+  display: none;
+}
+
+.sidebar.collapsed .nav-module {
+  justify-content: center;
+  padding: 12px;
+}
+
+.sidebar.collapsed .nav-module span {
+  justify-content: center;
+}
+
+.sidebar.collapsed .nav-submodule {
+  justify-content: center;
+  padding: 10px;
+}
+
+.sidebar.collapsed .nav-page {
+  justify-content: center;
+  padding: 8px;
+}  */
+
+/* ================= CSS-ONLY TOOLTIPS ================= */
+/* .sidebar.collapsed [data-tooltip] {
+  position: relative;
+}
+
+.sidebar.collapsed [data-tooltip]:hover::before {
+  content: attr(data-tooltip);
+  position: fixed;
+  left: 85px;
+  background: #0f172a;
+  color: #ffffff;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  z-index: 1000;
+  pointer-events: none;
+  animation: tooltipFadeIn 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 0.3px;
+} */
+
+/* Optional: Add a small arrow to the tooltip */
+/* .sidebar.collapsed [data-tooltip]:hover::after {
+  content: '';
+  position: fixed;
+  left: 78px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 6px solid transparent;
+  border-right-color: #0f172a;
+  z-index: 1000;
+  pointer-events: none;
+  animation: tooltipFadeIn 0.2s ease;
+} */
+
+/* Make sure tooltip appears above everything */
+/* .sidebar.collapsed .nav-module,
+.sidebar.collapsed .nav-submodule,
+.sidebar.collapsed .nav-page {
+  position: relative;
+} */
+
+/* Adjust tooltip position for different items if needed */
+/* .sidebar.collapsed .nav-submodule[data-tooltip]:hover::before {
+  left: 85px;
+}
+
+.sidebar.collapsed .nav-page[data-tooltip]:hover::before {
+  left: 85px;
+}
+
+@keyframes tooltipFadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+} */
+
+
+/* added by nishit */
+/* D:\schoolapp\frontend\src\styles\layout\sidebar.css */
 
 * {
   margin: 0;

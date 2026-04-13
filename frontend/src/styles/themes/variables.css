@@ -2,6 +2,17 @@
 
 /* ================= VARIABLES IMPORT ================= */
 /* This file imports both themes and sets defaults */
+/* @import "./light.css"; */
+
+/* Dark theme will be applied via data-theme attribute */
+
+
+/* added by nishit */
+
+/* D:\schoolapp\frontend\src\styles\themes\variables.css */
+
+/* ================= VARIABLES IMPORT ================= */
+/* This file imports both themes and sets defaults */
 @import "./light.css";
 
 /* Dark theme will be applied via data-theme attribute */

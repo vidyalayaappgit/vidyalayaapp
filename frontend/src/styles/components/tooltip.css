@@ -1,0 +1,243 @@
+/* =========================================
+   TOOLTIP STYLES FOR ACTION BUTTONS
+========================================= */
+
+/* =========================================
+   TOOLTIP STYLES FOR ACTION BUTTONS
+========================================= */
+
+/* Tooltip container - Base class */
+.tooltip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Tooltip container - Top position (MISSING THIS) */
+.tooltip-top {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Tooltip text for .tooltip class */
+.tooltip::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 6px 10px;
+  background-color: #1f2937;
+  color: white;
+  font-size: 11px;
+  font-weight: 500;
+  white-space: nowrap;
+  border-radius: 6px;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease;
+  z-index: 1000;
+  margin-bottom: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Tooltip arrow for .tooltip class */
+.tooltip::after {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 5px;
+  border-style: solid;
+  border-color: #1f2937 transparent transparent transparent;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease;
+  margin-bottom: 3px;
+  pointer-events: none;
+}
+
+/* Tooltip text for .tooltip-top class */
+.tooltip-top::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 6px 10px;
+  background-color: #1f2937;
+  color: white;
+  font-size: 11px;
+  font-weight: 500;
+  white-space: nowrap;
+  border-radius: 6px;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease;
+  z-index: 1000;
+  margin-bottom: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Tooltip arrow for .tooltip-top class */
+.tooltip-top::after {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 5px;
+  border-style: solid;
+  border-color: #1f2937 transparent transparent transparent;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease;
+  margin-bottom: 3px;
+  pointer-events: none;
+}
+
+/* Show tooltip on hover */
+.tooltip:hover::before,
+.tooltip:hover::after,
+.tooltip-top:hover::before,
+.tooltip-top:hover::after {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* For disabled buttons - still show tooltip */
+.tooltip.disabled,
+.tooltip-top.disabled {
+  cursor: not-allowed;
+}
+
+.tooltip.disabled:hover::before,
+.tooltip.disabled:hover::after,
+.tooltip-top.disabled:hover::before,
+.tooltip-top.disabled:hover::after {
+  opacity: 1;
+  visibility: visible;
+}
+
+
+/* =========================================
+   ACTION BUTTONS WITH TEXT & TOOLTIPS
+========================================= */
+
+/* Make action buttons wider to accommodate text */
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.action-buttons .icon-btn {
+  width: auto;
+  height: auto;
+  padding: 6px 12px;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+/* Button text styling */
+.action-buttons .btn-text {
+  display: inline-block;
+  font-size: 12px;
+}
+
+/* Edit button */
+.action-buttons .icon-btn--edit {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.action-buttons .icon-btn--edit:hover:not(:disabled) {
+  background-color: #2563eb;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+
+/* Authorize button */
+.action-buttons .icon-btn--authorize {
+  background-color: #10b981;
+  color: white;
+}
+
+.action-buttons .icon-btn--authorize:hover:not(:disabled) {
+  background-color: #059669;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+}
+
+/* Delete button */
+.action-buttons .icon-btn--delete {
+  background-color: #ef4444;
+  color: white;
+}
+
+.action-buttons .icon-btn--delete:hover:not(:disabled) {
+  background-color: #dc2626;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+}
+
+/* Disabled state */
+.action-buttons .icon-btn:disabled,
+.action-buttons .icon-btn.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  pointer-events: auto; /* Keep pointer events to allow tooltip */
+}
+
+/* =========================================
+   RESPONSIVE DESIGN
+========================================= */
+
+/* Tablet and mobile - hide text, show only icons */
+@media (max-width: 768px) {
+  .action-buttons .icon-btn {
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    justify-content: center;
+  }
+  
+  .action-buttons .btn-text {
+    display: none;
+  }
+  
+  .action-buttons .icon-btn i {
+    margin: 0;
+    font-size: 14px;
+  }
+  
+  /* Adjust tooltip position for mobile */
+  .tooltip::before {
+    font-size: 10px;
+    padding: 4px 8px;
+    white-space: nowrap;
+  }
+}
+
+/* Very small screens - stack buttons vertically */
+@media (max-width: 480px) {
+  .action-buttons {
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .action-buttons .icon-btn {
+    width: 100%;
+  }
+}

@@ -1,211 +1,142 @@
-// "use client";
-
-// AcademicYearList.tsx
-
-// import React, { useState } from 'react';
-// import { useAcademicYears, useDeleteAcademicYear, useAuthorizeAcademicYear, useSchoolId } from './academic-year.hooks';
-// import AcademicYearActions from './AcademicYearActions';
-// import AcademicYearForm from './AcademicYearForm';
-// import { AcademicYear } from './academic-year.types';
-
-// const AcademicYearList: React.FC = () => {
-//   const [showForm, setShowForm] = useState(false);
-//   const [editingYear, setEditingYear] = useState<AcademicYear | undefined>(undefined);
-//   const [actionError, setActionError] = useState<string | null>(null);
-//   const { data, isLoading, error, refetch } = useAcademicYears({ includeInactive: true, limit: 50 });
-//   const deleteMutation = useDeleteAcademicYear();
-//   const authorizeMutation = useAuthorizeAcademicYear();
-//   const defaultSchoolId = useSchoolId();
-
-//   const handleDelete = async (id: number, schoolId?: number | null) => {
-//     if (window.confirm('Are you sure you want to delete this academic year?')) {
-//       setActionError(null);
-//       const effectiveSchoolId = schoolId ?? defaultSchoolId;
-//       if (!effectiveSchoolId) {
-//         setActionError('School context missing; please re-login.');
-//         return;
-//       }
-//       try {
-//         await deleteMutation.mutateAsync({ id, schoolId: effectiveSchoolId });
-//         await refetch();
-//       } catch (err) {
-//         setActionError((err as Error).message);
-//       }
-//     }
-//   };
-
-//   const handleAuthorize = async (id: number, schoolId?: number | null) => {
-//     if (window.confirm('Activate this academic year?')) {
-//       setActionError(null);
-//       const effectiveSchoolId = schoolId ?? defaultSchoolId;
-//       if (!effectiveSchoolId) {
-//         setActionError('School context missing; please re-login.');
-//         return;
-//       }
-//       try {
-//         await authorizeMutation.mutateAsync({ id, schoolId: effectiveSchoolId });
-//         await refetch();
-//       } catch (err) {
-//         setActionError((err as Error).message);
-//       }
-//     }
-//   };
-
-//   const handleEdit = (year: AcademicYear) => {
-//     setEditingYear(year);
-//     setShowForm(true);
-//   };
-
-//   const handleFormSuccess = () => {
-//     setShowForm(false);
-//     setEditingYear(undefined);
-//     refetch();
-//   };
-
-//   if (isLoading) return <div>Loading...</div>;
-//   if (error) return <div>Error loading academic years: {(error as Error).message}</div>;
-
-//   const academicYears = data?.items || [];
-
-//   return (
-//     <div className="p-4">
-//       <div className="flex justify-between items-center mb-4">
-//         <h1 className="text-2xl font-bold">Academic Years</h1>
-//         <button
-//           onClick={() => setShowForm(true)}
-//           className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-//         >
-//           Add New Academic Year
-//         </button>
-//       </div>
-
-//       {showForm && (
-//         <div className="mb-6 p-4 border rounded bg-gray-50">
-//           <h2 className="text-xl font-semibold mb-4">
-//             {editingYear ? 'Edit Academic Year' : 'Create Academic Year'}
-//           </h2>
-//           <AcademicYearForm initialData={editingYear} onSuccess={handleFormSuccess} />
-//           <button
-//             onClick={() => {
-//               setShowForm(false);
-//               setEditingYear(undefined);
-//             }}
-//             className="mt-2 text-gray-500 hover:underline"
-//           >
-//             Cancel
-//           </button>
-//         </div>
-//       )}
-//       {actionError && <div className="text-red-600 text-sm mb-2">{actionError}</div>}
-
-//       <table className="min-w-full border">
-//         <thead>
-//           <tr className="bg-gray-100">
-//             <th className="border p-2">Year Name</th>
-//             <th className="border p-2">Code</th>
-//             <th className="border p-2">Start Date</th>
-//             <th className="border p-2">End Date</th>
-//             <th className="border p-2">Current</th>
-//             <th className="border p-2">Status</th>
-//             <th className="border p-2">Actions</th>
-//           </tr>
-//         </thead>
-//         <tbody>
-//           {academicYears.map((year, index) => (
-//             <tr
-//               key={
-//                 year.id ?? `${year.year_code ?? 'academic-year'}-${year.year_name ?? 'row'}-${index}`
-//               }
-//             >
-//               <td className="border p-2">{year.year_name}</td>
-//               <td className="border p-2">{year.year_code}</td>
-//               <td className="border p-2">
-//                 {year.start_date ? new Date(year.start_date).toLocaleDateString() : '-'}
-//               </td>
-//               <td className="border p-2">
-//                 {year.end_date ? new Date(year.end_date).toLocaleDateString() : '-'}
-//               </td>
-//               <td className="border p-2">{year.is_current ? 'Yes' : 'No'}</td>
-//               <td className="border p-2">{year.status_name}</td>
-//               <td className="border p-2">
-//                 <AcademicYearActions
-//                   year={year}
-//                   onEdit={() => handleEdit(year)}
-//                   onDelete={() => handleDelete(year.id!, year.school_id)}
-//                   onAuthorize={() => handleAuthorize(year.id!, year.school_id)}
-//                 />
-//               </td>
-//             </tr>
-//           ))}
-//         </tbody>
-//       </table>
-//     </div>
-//   );
-// };
-
-// export default AcademicYearList;
-
-// D:\schoolapp\frontend\src\shared\components\academic\AcademicYearList.tsx
 "use client";
 
-import React, { useState } from 'react';
-import { useAcademicYears, useDeleteAcademicYear, useAuthorizeAcademicYear, useSchoolId } from './academic-year.hooks';
-import AcademicYearActions from './AcademicYearActions';
+import React, { useState, useEffect } from 'react';
+import {
+  useAcademicYears,
+  useDeleteAcademicYear,
+  useAuthorizeAcademicYear,
+  useSchoolId
+} from './academic-year.hooks';
 import AcademicYearForm from './AcademicYearForm';
 import { AcademicYear } from './academic-year.types';
 
 const AcademicYearList: React.FC = () => {
   const [showForm, setShowForm] = useState(false);
-  const [editingYear, setEditingYear] = useState<AcademicYear | undefined>(undefined);
-  const [actionError, setActionError] = useState<string | null>(null);
-  const { data, isLoading, error, refetch } = useAcademicYears({ includeInactive: true, limit: 50 });
+  const [editingYear, setEditingYear] = useState<AcademicYear | undefined>();
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [successMsg, setSuccessMsg] = useState<string | null>(null);
+  
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
+
+  const schoolId = useSchoolId();
+
+  const { data, isLoading, error, refetch } = useAcademicYears({
+    schoolId: schoolId || undefined,
+    limit: 100
+  });
+
   const deleteMutation = useDeleteAcademicYear();
   const authorizeMutation = useAuthorizeAcademicYear();
-  const defaultSchoolId = useSchoolId();
 
-  const handleDelete = async (id: number, schoolId?: number | null) => {
-    if (window.confirm('Are you sure you want to delete this academic year?')) {
-      setActionError(null);
-      const effectiveSchoolId = schoolId ?? defaultSchoolId;
-      if (!effectiveSchoolId) {
-        setActionError('School context missing; please re-login.');
-        return;
-      }
-      try {
-        await deleteMutation.mutateAsync({ id, schoolId: effectiveSchoolId });
-        await refetch();
-      } catch (err) {
-        setActionError((err as Error).message);
-      }
-    }
-  };
+  useEffect(() => {
+    if (schoolId) refetch();
+  }, [schoolId, refetch]);
 
-  const handleAuthorize = async (id: number, schoolId?: number | null) => {
-    if (window.confirm('Activate this academic year?')) {
-      setActionError(null);
-      const effectiveSchoolId = schoolId ?? defaultSchoolId;
-      if (!effectiveSchoolId) {
-        setActionError('School context missing; please re-login.');
-        return;
-      }
-      try {
-        await authorizeMutation.mutateAsync({ id, schoolId: effectiveSchoolId });
-        await refetch();
-      } catch (err) {
-        setActionError((err as Error).message);
-      }
-    }
-  };
-
-  const handleEdit = (year: AcademicYear) => {
-    setEditingYear(year);
+  const handleAdd = () => {
+    setEditingYear(undefined);
     setShowForm(true);
   };
 
-  const handleFormSuccess = () => {
+  const handleEdit = (row: AcademicYear) => {
+    setEditingYear(row);
+    setShowForm(true);
+  };
+
+  const handleDelete = async (id: number, schoolIdVal?: number | null) => {
+    if (!confirm('Are you sure you want to delete this academic year?')) return;
+
+    try {
+      await deleteMutation.mutateAsync({
+        id,
+        schoolId: schoolIdVal ?? schoolId!
+      });
+      setSuccessMsg('Academic year deleted successfully');
+      setTimeout(() => setSuccessMsg(null), 3000);
+      refetch();
+    } catch (e: any) {
+      setErrorMsg(e.message);
+      setTimeout(() => setErrorMsg(null), 3000);
+    }
+  };
+
+  const handleAuthorize = async (id: number, schoolIdVal?: number | null) => {
+    if (!confirm('Activate this academic year?')) return;
+
+    try {
+      await authorizeMutation.mutateAsync({
+        id,
+        schoolId: schoolIdVal ?? schoolId!
+      });
+      setSuccessMsg('Academic year authorized successfully');
+      setTimeout(() => setSuccessMsg(null), 3000);
+      refetch();
+    } catch (e: any) {
+      setErrorMsg(e.message);
+      setTimeout(() => setErrorMsg(null), 3000);
+    }
+  };
+
+  const handleSuccess = () => {
     setShowForm(false);
     setEditingYear(undefined);
+    setSuccessMsg('Academic year saved successfully');
+    setTimeout(() => setSuccessMsg(null), 3000);
     refetch();
+  };
+
+  const rows = data?.items || [];
+  const totalItems = data?.total || rows.length;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  
+  // Get current page items
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = rows.slice(indexOfFirstItem, indexOfLastItem);
+
+  // Change page
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+  const goToPreviousPage = () => {
+    if (currentPage > 1) setCurrentPage(currentPage - 1);
+  };
+  const goToNextPage = () => {
+    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+  };
+
+  // Generate page numbers
+  const getPageNumbers = () => {
+    const pageNumbers = [];
+    const maxPagesToShow = 5;
+    
+    if (totalPages <= maxPagesToShow) {
+      for (let i = 1; i <= totalPages; i++) {
+        pageNumbers.push(i);
+      }
+    } else {
+      if (currentPage <= 3) {
+        for (let i = 1; i <= 4; i++) {
+          pageNumbers.push(i);
+        }
+        pageNumbers.push('...');
+        pageNumbers.push(totalPages);
+      } else if (currentPage >= totalPages - 2) {
+        pageNumbers.push(1);
+        pageNumbers.push('...');
+        for (let i = totalPages - 3; i <= totalPages; i++) {
+          pageNumbers.push(i);
+        }
+      } else {
+        pageNumbers.push(1);
+        pageNumbers.push('...');
+        for (let i = currentPage - 1; i <= currentPage + 1; i++) {
+          pageNumbers.push(i);
+        }
+        pageNumbers.push('...');
+        pageNumbers.push(totalPages);
+      }
+    }
+    return pageNumbers;
   };
 
   if (isLoading) {
@@ -219,145 +150,252 @@ const AcademicYearList: React.FC = () => {
 
   if (error) {
     return (
-      <div className="empty-state">
+      <div className="error-state">
         <i className="fa-solid fa-circle-exclamation"></i>
         <h3>Error Loading Data</h3>
         <p>{(error as Error).message}</p>
+        <button className="btn btn-primary" onClick={() => refetch()}>
+          <i className="fa-solid fa-rotate-right"></i> Retry
+        </button>
       </div>
     );
   }
 
-  const academicYears = data?.items || [];
-
   return (
     <div className="academic-year-container">
-      {/* Header */}
+      {/* Page Header */}
       <div className="page-header">
-        <h1>
+        <div className="header-title">
           <i className="fa-solid fa-calendar-alt"></i>
-          Academic Years
-        </h1>
-        <button onClick={() => setShowForm(true)} className="add-button">
+          <div>
+            <h1>Academic Years</h1>
+            <p>Manage school academic years and sessions</p>
+          </div>
+        </div>
+        <button className="btn btn-primary" onClick={handleAdd}>
           <i className="fa-solid fa-plus"></i>
           Add New Academic Year
         </button>
       </div>
 
-      {/* Form Modal/Card */}
-      {showForm && (
-        <div className="form-modal">
-          <AcademicYearForm 
-            initialData={editingYear} 
-            onSuccess={handleFormSuccess}
-            onCancel={() => {
-              setShowForm(false);
-              setEditingYear(undefined);
-            }}
-          />
+      {/* Success Message */}
+      {successMsg && (
+        <div className="alert alert-success">
+          <i className="fa-solid fa-check-circle"></i>
+          {successMsg}
+          <button className="close-message" onClick={() => setSuccessMsg(null)}>
+            <i className="fa-solid fa-times"></i>
+          </button>
         </div>
       )}
 
       {/* Error Message */}
-      {actionError && (
-        <div className="error-message">
+      {errorMsg && (
+        <div className="alert alert-error">
           <i className="fa-solid fa-circle-exclamation"></i>
-          {actionError}
+          {errorMsg}
+          <button className="close-message" onClick={() => setErrorMsg(null)}>
+            <i className="fa-solid fa-times"></i>
+          </button>
         </div>
       )}
 
-      {/* Table */}
-      <div className="academic-year-table-container">
-        <table className="academic-year-table">
-          <thead>
-            <tr>
-              <th><i className="fa-regular fa-tag"></i> Year Name</th>
-              <th><i className="fa-regular fa-hashtag"></i> Code</th>
-              <th><i className="fa-regular fa-calendar"></i> Start Date</th>
-              <th><i className="fa-regular fa-calendar"></i> End Date</th>
-              <th><i className="fa-solid fa-star"></i> Current</th>
-              <th><i className="fa-solid fa-circle-info"></i> Status</th>
-              <th><i className="fa-solid fa-gear"></i> Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {academicYears.length === 0 ? (
+      {/* Table Container */}
+      <div className="table-container">
+        <div className="table-responsive">
+          <table className="data-table">
+            <thead>
               <tr>
-                <td colSpan={7} className="empty-state">
-                  <i className="fa-regular fa-folder-open"></i>
-                  <h3>No Academic Years Found</h3>
-                  <p>Click "Add New Academic Year" to create one.</p>
-                </td>
+                <th>Year Name</th>
+                <th>Year Code</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Current</th>
+                <th>Status</th>
+                <th>Actions</th>
               </tr>
-            ) : (
-              academicYears.map((year, index) => (
-                <tr key={year.id ?? `academic-year-${index}`}>
-                  <td>
-                    <strong>{year.year_name || '-'}</strong>
-                  </td>
-                  <td>
-                    <code>{year.year_code || '-'}</code>
-                  </td>
-                  <td>
-                    {year.start_date ? new Date(year.start_date).toLocaleDateString() : '-'}
-                  </td>
-                  <td>
-                    {year.end_date ? new Date(year.end_date).toLocaleDateString() : '-'}
-                  </td>
-                  <td>
-                    {year.is_current ? (
-                      <span className="current-badge">
-                        <i className="fa-solid fa-star"></i> Current
-                      </span>
-                    ) : (
-                      <span className="current-badge" style={{ opacity: 0.5 }}>No</span>
-                    )}
-                  </td>
-                  <td>
-                    <span className={`status-badge status-${year.status_name?.toLowerCase() || 'draft'}`}>
-                      <i className={`fa-solid fa-${
-                        year.status_name === 'ACTIVE' ? 'check-circle' : 
-                        year.status_name === 'DRAFT' ? 'pen' : 'clock'
-                      }`}></i>
-                      {year.status_name || 'DRAFT'}
-                    </span>
-                  </td>
-                  <td>
-                    <div className="action-buttons">
-                      {year.status_name === 'DRAFT' && (
-                        <button
-                          onClick={() => handleEdit(year)}
-                          className="action-btn action-edit"
-                        >
-                          <i className="fa-regular fa-pen-to-square"></i>
-                          Edit
-                        </button>
-                      )}
-                      {year.status_name === 'DRAFT' && (
-                        <button
-                          onClick={() => handleAuthorize(year.id!, year.school_id)}
-                          className="action-btn action-authorize"
-                        >
-                          <i className="fa-solid fa-check-circle"></i>
-                          Authorize
-                        </button>
-                      )}
-                      {year.status_name === 'DRAFT' && !year.is_current && (
-                        <button
-                          onClick={() => handleDelete(year.id!, year.school_id)}
-                          className="action-btn action-delete"
-                        >
-                          <i className="fa-regular fa-trash-can"></i>
-                          Delete
-                        </button>
-                      )}
+            </thead>
+            <tbody>
+              {currentItems.length === 0 ? (
+                <tr>
+                  <td colSpan={7} className="table-empty-state">
+                    <div className="empty-state">
+                      <i className="fa-regular fa-folder-open"></i>
+                      <h4>No Academic Years Found</h4>
+                      <p>Click "Add New Academic Year" to create one.</p>
                     </div>
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+                   </td>
+                 </tr>
+              ) : (
+                currentItems.map((row) => {
+                  const dbStatus = (row.status || '').toUpperCase();
+                  const isFresh = dbStatus === 'FRESH';
+                  const isAuthorised = dbStatus === 'AUTHORISED';
+                  const displayStatus = isFresh ? 'DRAFT' : isAuthorised ? 'ACTIVE' : dbStatus;
+                  
+                  return (
+                    <tr key={row.id}>
+                      <td data-label="Year Name">
+                        <strong>{row.yearName || '-'}</strong>
+                      </td>
+                      <td data-label="Year Code">
+                        <code>{row.yearCode || '-'}</code>
+                      </td>
+                      <td data-label="Start Date">
+                        {row.startDate ? new Date(row.startDate).toLocaleDateString() : '-'}
+                      </td>
+                      <td data-label="End Date">
+                        {row.endDate ? new Date(row.endDate).toLocaleDateString() : '-'}
+                      </td>
+                      <td data-label="Current">
+                        {row.isCurrent ? (
+                          <span className="badge badge-success">
+                            <i className="fa-solid fa-star"></i> Current
+                          </span>
+                        ) : (
+                          <span className="badge badge-neutral">No</span>
+                        )}
+                      </td>
+                      <td data-label="Status">
+                        <span className={`badge ${isAuthorised ? 'badge-success' : 'badge-warning'}`}>
+                          <i className={`fa-solid fa-${isAuthorised ? 'check-circle' : 'pen'}`}></i>
+                          {displayStatus}
+                        </span>
+                      </td>
+                      <td data-label="Actions">
+                        <div className="action-buttons">
+                          {/* EDIT Button - With Tooltip */}
+                          {isFresh ? (
+                            <button
+                              className="icon-btn icon-btn--edit tooltip-top"
+                              onClick={() => handleEdit(row)}
+                              data-tooltip="Edit Academic Year"
+                            >
+                              <i className="fa-regular fa-pen-to-square"></i>
+                            </button>
+                          ) : (
+                            <button
+                              className="icon-btn icon-btn--edit disabled tooltip-top"
+                              disabled
+                              data-tooltip="Cannot edit authorized academic year"
+                            >
+                              <i className="fa-regular fa-pen-to-square"></i>
+                            </button>
+                          )}
+                          
+                          {/* AUTHORIZE Button - With Tooltip */}
+                          {isFresh ? (
+                            <button
+                              className="icon-btn icon-btn--authorize tooltip-top"
+                              onClick={() => handleAuthorize(row.id!, row.schoolId)}
+                              data-tooltip="Authorize Academic Year"
+                            >
+                              <i className="fa-solid fa-check-circle"></i>
+                            </button>
+                          ) : (
+                            <button
+                              className="icon-btn icon-btn--authorize disabled tooltip-top"
+                              disabled
+                              data-tooltip="Already authorized"
+                            >
+                              <i className="fa-solid fa-check-circle"></i>
+                            </button>
+                          )}
+                          
+                          {/* DELETE Button - With Tooltip */}
+                          {isFresh && !row.isCurrent ? (
+                            <button
+                              className="icon-btn icon-btn--delete tooltip-top"
+                              onClick={() => handleDelete(row.id!, row.schoolId)}
+                              data-tooltip="Delete Academic Year"
+                            >
+                              <i className="fa-regular fa-trash-can"></i>
+                            </button>
+                          ) : isAuthorised && (
+                            <button
+                              className="icon-btn icon-btn--delete disabled tooltip-top"
+                              disabled
+                              data-tooltip="Cannot delete authorized academic year"
+                            >
+                              <i className="fa-regular fa-trash-can"></i>
+                            </button>
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })
+              )}
+            </tbody>
+          </table>
+        </div>
+        
+        {/* Table Footer with Pagination */}
+        {rows.length > 0 && (
+          <div className="table-footer">
+            <div className="table-info">
+              Showing {indexOfFirstItem + 1} to {Math.min(indexOfLastItem, totalItems)} of {totalItems} entries
+            </div>
+            <div className="pagination">
+              <button 
+                className="pagination-btn"
+                onClick={goToPreviousPage}
+                disabled={currentPage === 1}
+              >
+                <i className="fa-solid fa-chevron-left"></i>
+                Previous
+              </button>
+              
+              {getPageNumbers().map((pageNumber, index) => (
+                <button
+                  key={index}
+                  className={`pagination-btn ${pageNumber === currentPage ? 'active' : ''}`}
+                  onClick={() => typeof pageNumber === 'number' && paginate(pageNumber)}
+                  disabled={pageNumber === '...'}
+                >
+                  {pageNumber}
+                </button>
+              ))}
+              
+              <button 
+                className="pagination-btn"
+                onClick={goToNextPage}
+                disabled={currentPage === totalPages}
+              >
+                Next
+                <i className="fa-solid fa-chevron-right"></i>
+              </button>
+            </div>
+          </div>
+        )}
       </div>
+
+      {/* Modal for Form */}
+      {showForm && (
+        <div className="modal-overlay" onClick={() => setShowForm(false)}>
+          <div className="modal-container modal-form" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <div className="modal-title">
+                <i className="fa-solid fa-calendar-alt"></i>
+                <div>
+                  <h2>{editingYear ? 'Edit Academic Year' : 'Create Academic Year'}</h2>
+                  <p>Add a new academic year to the system</p>
+                </div>
+              </div>
+              <button className="modal-close" onClick={() => setShowForm(false)}>
+                <i className="fa-solid fa-times"></i>
+              </button>
+            </div>
+            <div className="modal-body">
+              <AcademicYearForm
+                initialData={editingYear}
+                onSuccess={handleSuccess}
+                onCancel={() => setShowForm(false)}
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
