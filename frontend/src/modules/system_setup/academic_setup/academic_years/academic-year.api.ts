@@ -7,7 +7,6 @@ import {
   UpdateAcademicYearPayload,
   ListAcademicYearParams,
   AcademicYear,
-  ListAcademicYearResponse,
   AcademicYearDB,
   SingleAcademicYearResponse,
   BasicResponse,

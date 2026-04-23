@@ -25,6 +25,8 @@ import { validate } from '@config/env.config';
 
 // Business modules
 import { AcademicYearsModule } from '@modules/system_setup/academic_setup/academic_years/academic-years.module';
+import { ClassesModule } from '@modules/system_setup/academic_setup/classes/classes.module';
+import { SubjectsModule } from '@modules/system_setup/academic_setup/subjects/subjects.module'; // ✅ Fixed path
 
 @Module({
   imports: [
@@ -56,10 +58,16 @@ import { AcademicYearsModule } from '@modules/system_setup/academic_setup/academ
 
     // Business Modules
     AcademicYearsModule,
-
+    ClassesModule,
+    SubjectsModule,
   ],
 
-  controllers: [AppController, TestController, HealthController, TestAuthController],
+  controllers: [
+    AppController,
+    TestController,
+    HealthController,
+    TestAuthController,
+  ],
 
   providers: [
     AppService,

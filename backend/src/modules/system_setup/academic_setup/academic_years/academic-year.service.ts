@@ -7,7 +7,7 @@ import {
   AcademicYearListResult,
 } from './academic-year.types';
 
-type Operation = 'create' | 'update' | 'delete' | 'authorize' | 'view';
+type Operation = 'create' | 'edit' | 'delete' | 'authorize' | 'view';
 
 @Injectable()
 export class AcademicYearService {
@@ -96,7 +96,7 @@ export class AcademicYearService {
     userId: number;
     auditUserId?: number;
   }): Promise<AcademicYearRecord> {
-    const rows = await this.callFunction('update', {
+    const rows = await this.callFunction('edit', {
       userId: data.userId,
       schoolId: data.schoolId,
       id: data.id,

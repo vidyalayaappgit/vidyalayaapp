@@ -98,6 +98,15 @@
   cursor: not-allowed;
 }
 
+/* Deactivate */
+.icon-btn--deactivate {
+  background-color: #f59e0b;
+  color: #fff;
+}
+.icon-btn--deactivate:hover {
+  background-color: #d97706;
+  transform: translateY(-1px);
+}
 
 
 /* added by nishit */

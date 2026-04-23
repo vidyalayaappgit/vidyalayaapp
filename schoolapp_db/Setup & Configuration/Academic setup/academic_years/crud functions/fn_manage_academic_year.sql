@@ -1,5 +1,5 @@
 /*
-
+select *from academic_years
 select p.id,p.page_code,page_name,f.id,f.form_code,f.form_name,c.id,c.control_code,c.control_name
 from pages p,forms f,form_controls fc,controls c
 where p.id=page_id 
@@ -15,8 +15,8 @@ SELECT * FROM fn_manage_academic_year('create', 4, 1, NULL, 'AY 2025', '2025', '
 
 UPDATE (requires control update)
 SELECT * FROM fn_manage_academic_year(
-'update',4,1,5,          -- id
-'AY 2025 Updated',NULL,NULL,NULL,NULL,NULL,NULL);
+'edit',4,1,4,          -- id
+'2028-2029 Updated',NULL,'2028-04-01', '2029-03-31',NULL,NULL,NULL);
 
 AUTHORIZE (requires control authorize)
 SELECT * FROM fn_manage_academic_year(
@@ -45,6 +45,9 @@ SELECT * FROM fn_manage_academic_year(
 'VIEW', 10, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ACTIVE', 20, 0, TRUE
 );
 drop function fn_manage_academic_year
+
+
+
 */
 CREATE OR REPLACE FUNCTION fn_manage_academic_year (
     p_operation   VARCHAR(50),
@@ -233,7 +236,7 @@ BEGIN
     ----------------------------------------------------------------
     -- 8. UPDATE
     ----------------------------------------------------------------
-    ELSIF p_operation = 'update' THEN
+    ELSIF p_operation = 'edit' THEN
         IF p_id IS NULL THEN
             RAISE EXCEPTION 'ID required for update';
         END IF;
