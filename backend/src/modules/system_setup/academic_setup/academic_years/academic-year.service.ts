@@ -1,13 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common';
-
 import { PostgresService } from '@core/database/postgres.service';
+import { AcademicYearRecord, AcademicYearListResult } from './academic-year.types';
 
-import {
-  AcademicYearRecord,
-  AcademicYearListResult,
-} from './academic-year.types';
-
-type Operation = 'create' | 'edit' | 'delete' | 'authorize' | 'view';
+type Operation = 'create' | 'edit' | 'delete' | 'activate' | 'complete' | 'cancel' | 'view';
 
 @Injectable()
 export class AcademicYearService {
@@ -18,35 +13,39 @@ export class AcademicYearService {
 
   /**
    * Helper to execute the underlying database function with positional parameters.
+   * Now supports 12 parameters including p_terms_json
    */
   private async callFunction(
     operation: Operation,
     params: {
       userId: number;
-      schoolId?: number;
-      id?: number;
-      yearName?: string;
-      yearCode?: string;
-      startDate?: Date;
-      endDate?: Date;
-      isCurrent?: boolean;
+      schoolId?: number | null;
+      id?: number | null;
+      yearName?: string | null;
+      yearCode?: string | null;
+      startDate?: Date | null;
+      endDate?: Date | null;
+      isCurrent?: boolean | null;
       limit?: number;
       offset?: number;
+      termsJson?: any | null;  // JSONB for terms
     },
   ): Promise<AcademicYearListResult> {
-    const sql = `SELECT * FROM ${this.fnName}($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)`;
+    // SQL function expects 12 parameters (added p_terms_json)
+    const sql = `SELECT * FROM ${this.fnName}($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)`;
     const values = [
       operation,
       params.userId,
-      params.schoolId ?? null,
-      params.id ?? null,
-      params.yearName ?? null,
-      params.yearCode ?? null,
-      params.startDate ?? null,
-      params.endDate ?? null,
-      params.isCurrent ?? null,
+      params.schoolId !== undefined ? params.schoolId : null,
+      params.id !== undefined ? params.id : null,
+      params.yearName !== undefined ? params.yearName : null,
+      params.yearCode !== undefined ? params.yearCode : null,
+      params.startDate !== undefined ? params.startDate : null,
+      params.endDate !== undefined ? params.endDate : null,
+      params.isCurrent !== undefined ? params.isCurrent : null,
       params.limit ?? 100,
       params.offset ?? 0,
+      params.termsJson !== undefined ? params.termsJson : null,
     ];
 
     const result = await this.db.query<AcademicYearRecord>(sql, values);
@@ -54,7 +53,7 @@ export class AcademicYearService {
   }
 
   /**
-   * Create a new academic year.
+   * Create a new academic year (always DRAFT status) with optional terms
    */
   async create(data: {
     schoolId: number;
@@ -62,9 +61,8 @@ export class AcademicYearService {
     yearCode: string;
     startDate: Date;
     endDate: Date;
-    isCurrent?: boolean;
     userId: number;
-    auditUserId?: number;
+    terms?: any[];  // Optional terms array
   }): Promise<AcademicYearRecord> {
     const rows = await this.callFunction('create', {
       userId: data.userId,
@@ -73,7 +71,7 @@ export class AcademicYearService {
       yearCode: data.yearCode,
       startDate: data.startDate,
       endDate: data.endDate,
-      ...(data.isCurrent !== undefined ? { isCurrent: data.isCurrent } : {}),
+      termsJson: data.terms ? JSON.stringify(data.terms) : null,
       limit: 1,
       offset: 0,
     });
@@ -83,7 +81,7 @@ export class AcademicYearService {
   }
 
   /**
-   * Update an existing academic year.
+   * Update an existing academic year (only DRAFT or CANCELLED status) with optional terms
    */
   async update(data: {
     id: number;
@@ -92,19 +90,18 @@ export class AcademicYearService {
     yearCode?: string;
     startDate?: Date;
     endDate?: Date;
-    isCurrent?: boolean;
     userId: number;
-    auditUserId?: number;
+    terms?: any[];  // Optional terms array
   }): Promise<AcademicYearRecord> {
     const rows = await this.callFunction('edit', {
       userId: data.userId,
       schoolId: data.schoolId,
       id: data.id,
-      ...(data.yearName !== undefined ? { yearName: data.yearName } : {}),
-      ...(data.yearCode !== undefined ? { yearCode: data.yearCode } : {}),
-      ...(data.startDate !== undefined ? { startDate: data.startDate } : {}),
-      ...(data.endDate !== undefined ? { endDate: data.endDate } : {}),
-      ...(data.isCurrent !== undefined ? { isCurrent: data.isCurrent } : {}),
+      yearName: data.yearName ?? null,
+      yearCode: data.yearCode ?? null,
+      startDate: data.startDate ?? null,
+      endDate: data.endDate ?? null,
+      termsJson: data.terms ? JSON.stringify(data.terms) : null,
       limit: 1,
       offset: 0,
     });
@@ -114,13 +111,12 @@ export class AcademicYearService {
   }
 
   /**
-   * Delete an academic year.
+   * Delete an academic year permanently (only DRAFT status)
    */
   async delete(data: {
     id: number;
     schoolId: number;
     userId: number;
-    auditUserId?: number;
   }): Promise<AcademicYearRecord> {
     const rows = await this.callFunction('delete', {
       userId: data.userId,
@@ -135,15 +131,15 @@ export class AcademicYearService {
   }
 
   /**
-   * Authorize (activate) an academic year.
+   * Activate academic year (DRAFT -> ACTIVE)
+   * Only one ACTIVE year per school
    */
-  async authorize(data: {
+  async activate(data: {
     id: number;
     schoolId: number;
     userId: number;
-    auditUserId?: number;
   }): Promise<AcademicYearRecord> {
-    const rows = await this.callFunction('authorize', {
+    const rows = await this.callFunction('activate', {
       userId: data.userId,
       schoolId: data.schoolId,
       id: data.id,
@@ -151,26 +147,64 @@ export class AcademicYearService {
       offset: 0,
     });
 
-    this.logger.log(`Authorize academic year -> id:${data.id}, school:${data.schoolId}`);
+    this.logger.log(`Activate academic year -> id:${data.id}, school:${data.schoolId}`);
     return rows[0] ?? null;
   }
 
   /**
-   * View academic years with optional filters.
+   * Complete academic year (ACTIVE -> COMPLETED)
+   */
+  async complete(data: {
+    id: number;
+    schoolId: number;
+    userId: number;
+  }): Promise<AcademicYearRecord> {
+    const rows = await this.callFunction('complete', {
+      userId: data.userId,
+      schoolId: data.schoolId,
+      id: data.id,
+      limit: 1,
+      offset: 0,
+    });
+
+    this.logger.log(`Complete academic year -> id:${data.id}, school:${data.schoolId}`);
+    return rows[0] ?? null;
+  }
+
+  /**
+   * Cancel academic year (DRAFT or ACTIVE -> CANCELLED)
+   */
+  async cancel(data: {
+    id: number;
+    schoolId: number;
+    userId: number;
+  }): Promise<AcademicYearRecord> {
+    const rows = await this.callFunction('cancel', {
+      userId: data.userId,
+      schoolId: data.schoolId,
+      id: data.id,
+      limit: 1,
+      offset: 0,
+    });
+
+    this.logger.log(`Cancel academic year -> id:${data.id}, school:${data.schoolId}`);
+    return rows[0] ?? null;
+  }
+
+  /**
+   * View academic years with optional filters
    */
   async view(data: {
     schoolId?: number;
     id?: number;
-    statusFilter?: string;
-    includeInactive?: boolean;
     limit?: number;
     offset?: number;
     userId: number;
   }): Promise<AcademicYearListResult> {
     const rows = await this.callFunction('view', {
       userId: data.userId,
-      ...(data.schoolId !== undefined ? { schoolId: data.schoolId } : {}),
-      ...(data.id !== undefined ? { id: data.id } : {}),
+      schoolId: data.schoolId ?? null,
+      id: data.id ?? null,
       limit: data.limit ?? 100,
       offset: data.offset ?? 0,
     });

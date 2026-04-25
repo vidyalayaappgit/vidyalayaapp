@@ -12,7 +12,9 @@ import {
   createAcademicYear,
   updateAcademicYear,
   deleteAcademicYear,
-  authorizeAcademicYear,
+  activateAcademicYear,
+  completeAcademicYear,
+  cancelAcademicYear,
 } from './academic-year.api';
 import { CreateAcademicYearPayload, UpdateAcademicYearPayload, ListAcademicYearParams } from './academic-year.types';
 
@@ -257,16 +259,46 @@ export function useDeleteAcademicYear() {
 }
 
 /**
- * Hook to authorize (activate) an academic year.
+ * Hook to activate an academic year (DRAFT -> ACTIVE)
  */
-export function useAuthorizeAcademicYear() {
+export function useActivateAcademicYear() {
   const { apiBasePath } = usePage();
   
   const getBasePath = useCallback(() => apiBasePath, [apiBasePath]);
   
   return useAsyncMutation(
     (basePath, { id, schoolId }: { id: number; schoolId: number }) =>
-      authorizeAcademicYear(basePath, id, schoolId),
+      activateAcademicYear(basePath, id, schoolId),
+    getBasePath
+  );
+}
+
+/**
+ * Hook to complete an academic year (ACTIVE -> COMPLETED)
+ */
+export function useCompleteAcademicYear() {
+  const { apiBasePath } = usePage();
+  
+  const getBasePath = useCallback(() => apiBasePath, [apiBasePath]);
+  
+  return useAsyncMutation(
+    (basePath, { id, schoolId }: { id: number; schoolId: number }) =>
+      completeAcademicYear(basePath, id, schoolId),
+    getBasePath
+  );
+}
+
+/**
+ * Hook to cancel an academic year (DRAFT or ACTIVE -> CANCELLED)
+ */
+export function useCancelAcademicYear() {
+  const { apiBasePath } = usePage();
+  
+  const getBasePath = useCallback(() => apiBasePath, [apiBasePath]);
+  
+  return useAsyncMutation(
+    (basePath, { id, schoolId }: { id: number; schoolId: number }) =>
+      cancelAcademicYear(basePath, id, schoolId),
     getBasePath
   );
 }

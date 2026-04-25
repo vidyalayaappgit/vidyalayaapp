@@ -1,11 +1,23 @@
-// D:\schoolapp\frontend\src\modules\system_setup\academic_setup\classes\ClassesForm.tsx
-
 "use client";
 
 import React, { useState, useEffect } from 'react';
 import { useCreateClass, useUpdateClass, useSchoolId } from './classes.hooks';
 import { Class, Section } from './classes.types';
-import '@/styles/components/classes.css';
+
+const formatDateForInput = (dateString: string | undefined): string => {
+  if (!dateString) return '';
+  try {
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return '';
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  } catch {
+    return '';
+  }
+};
+
 interface ClassFormProps {
   initialData?: Class;
   onSuccess?: () => void;
@@ -84,12 +96,6 @@ const ClassForm: React.FC<ClassFormProps> = ({
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSectionChange = (index: number, field: keyof Section, value: any) => {
-    const updatedSections = [...sections];
-    updatedSections[index] = { ...updatedSections[index], [field]: value };
-    setSections(updatedSections);
-  };
-
   const addSection = () => {
     setSections([
       ...sections,
@@ -100,6 +106,12 @@ const ClassForm: React.FC<ClassFormProps> = ({
         display_order: sections.length + 1,
       }
     ]);
+  };
+
+  const updateSection = (index: number, field: keyof Section, value: any) => {
+    const updatedSections = [...sections];
+    updatedSections[index] = { ...updatedSections[index], [field]: value };
+    setSections(updatedSections);
   };
 
   const removeSection = (index: number) => {
@@ -223,298 +235,304 @@ const ClassForm: React.FC<ClassFormProps> = ({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="class-form-container">
-      <div className="class-form-body">
-        {/* Class Information Section */}
-        <div className="class-form-section">
-          <div className="class-form-section-header">
-            <i className="fa-solid fa-info-circle"></i>
-            <span>Class Information</span>
+    <form onSubmit={handleSubmit} className="form-container">
+      <div className="form-body" style={{ padding: 0 }}>
+        <div className="form-grid-2">
+          {/* Class Name */}
+          <div className="form-group">
+            <label>Class Name <span className="required">*</span></label>
+            <div className="input-icon-wrapper">
+              <i className="fa-regular fa-tag"></i>
+              <input
+                type="text"
+                name="className"
+                value={formData.className}
+                onChange={handleChange}
+                placeholder="e.g., Class 1"
+                required
+              />
+            </div>
           </div>
-          <div className="class-form-section-body">
-            <div className="class-form-grid-2">
-              <div className="class-form-group">
-                <label>Class Name <span className="required">*</span></label>
-                <div className="class-input-icon-wrapper">
-                  <i className="fa-regular fa-tag"></i>
-                  <input
-                    type="text"
-                    name="className"
-                    value={formData.className}
-                    onChange={handleChange}
-                    placeholder="e.g., Class 1"
-                    required
-                  />
-                </div>
-              </div>
 
-              <div className="class-form-group">
-                <label>Class Code <span className="required">*</span></label>
-                <div className="class-input-icon-wrapper">
-                  <i className="fa-regular fa-hashtag"></i>
-                  <input
-                    type="text"
-                    name="classCode"
-                    value={formData.classCode}
-                    onChange={handleChange}
-                    placeholder="e.g., CLS-01"
-                    required
-                  />
-                </div>
-                <div className="class-form-help">
-                  <i className="fa-regular fa-circle-info"></i>
-                  Unique identifier for this class
-                </div>
-              </div>
+          {/* Class Code */}
+          <div className="form-group">
+            <label>Class Code <span className="required">*</span></label>
+            <div className="input-icon-wrapper">
+              <i className="fa-regular fa-hashtag"></i>
+              <input
+                type="text"
+                name="classCode"
+                value={formData.classCode}
+                onChange={handleChange}
+                placeholder="e.g., CLS-01"
+                required
+              />
+            </div>
+            <div className="form-help">
+              <i className="fa-regular fa-circle-info"></i>
+              Unique identifier for this class
+            </div>
+          </div>
 
-              <div className="class-form-group">
-                <label>Class Number <span className="required">*</span></label>
-                <div className="class-input-icon-wrapper">
-                  <i className="fa-regular fa-number"></i>
-                  <input
-                    type="number"
-                    name="classNumber"
-                    value={formData.classNumber}
-                    onChange={handleChange}
-                    placeholder="0=Nursery,1=LKG,2=UKG,3=Class1..."
-                    min="0"
-                    max="14"
-                    required
-                  />
-                </div>
-                <div className="class-form-help">
-                  <i className="fa-regular fa-circle-info"></i>
-                  0=Nursery, 1=LKG, 2=UKG, 3-14=Class 1-12
-                </div>
-              </div>
+          {/* Class Number */}
+          <div className="form-group">
+            <label>Class Number <span className="required">*</span></label>
+            <div className="input-icon-wrapper">
+              <i className="fa-regular fa-number"></i>
+              <input
+                type="number"
+                name="classNumber"
+                value={formData.classNumber}
+                onChange={handleChange}
+                placeholder="0=Nursery, 1=LKG, 2=UKG, 3=Class 1..."
+                min="0"
+                max="14"
+                required
+              />
+            </div>
+            <div className="form-help">
+              <i className="fa-regular fa-circle-info"></i>
+              0=Nursery, 1=LKG, 2=UKG, 3-14=Class 1-12
+            </div>
+          </div>
 
-              <div className="class-form-group">
-                <label>Roman Numeral</label>
-                <div className="class-input-icon-wrapper">
-                  <i className="fa-regular fa-chart-line"></i>
-                  <input
-                    type="text"
-                    name="classRomanNumeral"
-                    value={formData.classRomanNumeral}
-                    onChange={handleChange}
-                    placeholder="e.g., I, II, III..."
-                  />
-                </div>
-                <div className="class-form-help">
-                  <i className="fa-regular fa-circle-info"></i>
-                  Optional - for classes 1-12 only
-                </div>
-              </div>
+          {/* Roman Numeral */}
+          <div className="form-group">
+            <label>Roman Numeral</label>
+            <div className="input-icon-wrapper">
+              <i className="fa-regular fa-chart-line"></i>
+              <input
+                type="text"
+                name="classRomanNumeral"
+                value={formData.classRomanNumeral}
+                onChange={handleChange}
+                placeholder="e.g., I, II, III..."
+              />
+            </div>
+            <div className="form-help">
+              <i className="fa-regular fa-circle-info"></i>
+              Optional - for classes 1-12 only
+            </div>
+          </div>
 
-              <div className="class-form-group">
-                <label>Display Order</label>
-                <div className="class-input-icon-wrapper">
-                  <i className="fa-regular fa-arrow-down-1-9"></i>
-                  <input
-                    type="number"
-                    name="displayOrder"
-                    value={formData.displayOrder}
-                    onChange={handleChange}
-                    placeholder="For custom ordering"
-                    min="0"
-                  />
-                </div>
-              </div>
+          {/* Display Order */}
+          <div className="form-group">
+            <label>Display Order</label>
+            <div className="input-icon-wrapper">
+              <i className="fa-regular fa-arrow-down-1-9"></i>
+              <input
+                type="number"
+                name="displayOrder"
+                value={formData.displayOrder}
+                onChange={handleChange}
+                placeholder="For custom ordering"
+                min="0"
+              />
+            </div>
+            <div className="form-help">
+              <i className="fa-regular fa-circle-info"></i>
+              For custom ordering
+            </div>
+          </div>
 
-              <div className="class-form-group">
-                <label>Academic Level <span className="required">*</span></label>
-                <div className="class-input-icon-wrapper">
-                  <i className="fa-regular fa-graduation-cap"></i>
-                  <select
-                    name="academicLevelId"
-                    value={formData.academicLevelId}
-                    onChange={handleChange}
-                    required
-                  >
-                    <option value="">Select Academic Level</option>
-                    <option value="1">Pre-Primary</option>
-                    <option value="2">Lower Primary</option>
-                    <option value="3">Upper Primary</option>
-                    <option value="4">Secondary</option>
-                    <option value="5">Higher Secondary</option>
-                  </select>
-                </div>
-              </div>
+          {/* Academic Level */}
+          <div className="form-group">
+            <label>Academic Level <span className="required">*</span></label>
+            <div className="input-icon-wrapper">
+              <i className="fa-regular fa-graduation-cap"></i>
+              <select
+                name="academicLevelId"
+                value={formData.academicLevelId}
+                onChange={handleChange}
+                required
+              >
+                <option value="">Select Academic Level</option>
+                <option value="1">Pre-Primary</option>
+                <option value="2">Lower Primary</option>
+                <option value="3">Upper Primary</option>
+                <option value="4">Secondary</option>
+                <option value="5">Higher Secondary</option>
+              </select>
+            </div>
+          </div>
 
-              <div className="class-form-group">
-                <label>Minimum Age (Years)</label>
-                <div className="class-input-icon-wrapper">
-                  <i className="fa-regular fa-calendar"></i>
-                  <input
-                    type="number"
-                    name="minAgeRequired"
-                    value={formData.minAgeRequired}
-                    onChange={handleChange}
-                    placeholder="e.g., 6"
-                    min="0"
-                  />
-                </div>
-              </div>
+          {/* Minimum Age */}
+          <div className="form-group">
+            <label>Minimum Age (Years)</label>
+            <div className="input-icon-wrapper">
+              <i className="fa-regular fa-calendar"></i>
+              <input
+                type="number"
+                name="minAgeRequired"
+                value={formData.minAgeRequired}
+                onChange={handleChange}
+                placeholder="e.g., 6"
+                min="0"
+              />
+            </div>
+          </div>
 
-              <div className="class-form-group">
-                <label>Maximum Age (Years)</label>
-                <div className="class-input-icon-wrapper">
-                  <i className="fa-regular fa-calendar"></i>
-                  <input
-                    type="number"
-                    name="maxAgeRequired"
-                    value={formData.maxAgeRequired}
-                    onChange={handleChange}
-                    placeholder="e.g., 7"
-                    min="0"
-                  />
-                </div>
-              </div>
+          {/* Maximum Age */}
+          <div className="form-group">
+            <label>Maximum Age (Years)</label>
+            <div className="input-icon-wrapper">
+              <i className="fa-regular fa-calendar"></i>
+              <input
+                type="number"
+                name="maxAgeRequired"
+                value={formData.maxAgeRequired}
+                onChange={handleChange}
+                placeholder="e.g., 7"
+                min="0"
+              />
+            </div>
+          </div>
 
-              <div className="class-form-group class-form-grid-full">
-                <label>Description</label>
-                <textarea
-                  name="description"
-                  value={formData.description}
-                  onChange={handleChange}
-                  placeholder="Additional information about this class"
-                  rows={3}
-                />
-              </div>
+          {/* Description - Full Width */}
+          <div className="form-group" style={{ gridColumn: '1 / -1' }}>
+            <label>Description</label>
+            <div className="input-icon-wrapper">
+              <i className="fa-regular fa-align-left"></i>
+              <textarea
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                placeholder="Additional information about this class"
+                rows={3}
+                style={{ resize: 'vertical' }}
+              />
             </div>
           </div>
         </div>
 
-        {/* Sections Section - Compact Cards */}
-        <div className="class-form-section">
-          <div className="class-form-section-header">
-            <i className="fa-solid fa-layer-group"></i>
-            <span>Sections</span>
-            <button type="button" className="class-add-section-btn" onClick={addSection}>
+        {/* Sections Section */}
+        <div style={{ marginTop: 'var(--spacing-6)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--spacing-4)' }}>
+            <div>
+              <h3 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 600 }}>
+                <i className="fa-solid fa-layer-group" style={{ marginRight: '0.5rem' }}></i>
+                Sections
+              </h3>
+              <small style={{ color: 'var(--text-secondary)' }}>Define sections within this class</small>
+            </div>
+            <button type="button" className="btn btn-sm btn-outline" onClick={addSection}>
               <i className="fa-solid fa-plus"></i> Add Section
             </button>
           </div>
-          <div className="class-form-section-body class-sections-scrollable">
-            {sections.length === 0 ? (
-              <div className="class-empty-state">
-                <i className="fa-regular fa-folder-open"></i>
-                <p>No sections added yet. Click "Add Section" to create one.</p>
-              </div>
-            ) : (
-              <div className="class-sections-compact-list">
-                {sections.map((section, index) => (
-                  <div key={index} className="class-section-compact-card">
-                    <div className="class-section-compact-header">
-                      <div className="class-section-compact-title">
-                        <i className="fa-solid fa-layer-group"></i>
-                        <span>Section {String.fromCharCode(65 + index)}</span>
-                      </div>
-                      <button
-                        type="button"
-                        className="class-remove-section-btn"
-                        onClick={() => removeSection(index)}
-                      >
-                        <i className="fa-regular fa-trash-can"></i>
-                      </button>
-                    </div>
-                    <div className="class-section-compact-body">
-                      <div className="class-form-grid-2">
-                        <div className="class-form-group">
-                          <label>Section Code <span className="required">*</span></label>
-                          <input
-                            type="text"
-                            value={section.section_code || ''}
-                            onChange={(e) => handleSectionChange(index, 'section_code', e.target.value)}
-                            placeholder="e.g., A, B, C"
-                          />
-                        </div>
-                        <div className="class-form-group">
-                          <label>Section Name <span className="required">*</span></label>
-                          <input
-                            type="text"
-                            value={section.section_name || ''}
-                            onChange={(e) => handleSectionChange(index, 'section_name', e.target.value)}
-                            placeholder="e.g., Section A"
-                          />
-                        </div>
-                        <div className="class-form-group">
-                          <label>Room ID</label>
-                          <input
-                            type="number"
-                            value={section.room_id || ''}
-                            onChange={(e) => handleSectionChange(index, 'room_id', e.target.value ? parseInt(e.target.value) : undefined)}
-                            placeholder="Room ID"
-                          />
-                        </div>
-                        <div className="class-form-group">
-                          <label>Capacity</label>
-                          <input
-                            type="number"
-                            value={section.capacity || 30}
-                            onChange={(e) => handleSectionChange(index, 'capacity', e.target.value ? parseInt(e.target.value) : 30)}
-                            placeholder="Max students"
-                            min="1"
-                            max="200"
-                          />
-                        </div>
-                        <div className="class-form-group">
-                          <label>Start Time</label>
-                          <input
-                            type="time"
-                            value={section.start_time || ''}
-                            onChange={(e) => handleSectionChange(index, 'start_time', e.target.value)}
-                          />
-                        </div>
-                        <div className="class-form-group">
-                          <label>End Time</label>
-                          <input
-                            type="time"
-                            value={section.end_time || ''}
-                            onChange={(e) => handleSectionChange(index, 'end_time', e.target.value)}
-                          />
-                        </div>
-                        <div className="class-form-group">
-                          <label>Display Order</label>
-                          <input
-                            type="number"
-                            value={section.display_order || index + 1}
-                            onChange={(e) => handleSectionChange(index, 'display_order', e.target.value ? parseInt(e.target.value) : index + 1)}
-                            placeholder="Display order"
-                            min="0"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
+
+          {sections.length > 0 && (
+            <div className="table-responsive" style={{ overflowX: 'auto' }}>
+              <table className="data-table" style={{ minWidth: '600px' }}>
+                <thead>
+                  <tr>
+                    <th style={{ width: '40px' }}>#</th>
+                    <th>Section Name</th>
+                    <th>Section Code</th>
+                    <th>Capacity</th>
+                    <th>Room ID</th>
+                    <th style={{ width: '50px' }}></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {sections.map((section, index) => (
+                    <tr key={index}>
+                      <td>{section.display_order || index + 1}</td>
+                      <td>
+                        <input
+                          type="text"
+                          value={section.section_name || ''}
+                          onChange={(e) => updateSection(index, 'section_name', e.target.value)}
+                          placeholder="e.g., Section A"
+                          className="form-control"
+                          style={{ width: '100%', minWidth: '120px' }}
+                          required
+                        />
+                      </td>
+                      <td>
+                        <input
+                          type="text"
+                          value={section.section_code || ''}
+                          onChange={(e) => updateSection(index, 'section_code', e.target.value.toUpperCase())}
+                          placeholder="e.g., A"
+                          className="form-control"
+                          style={{ width: '100px' }}
+                          required
+                        />
+                      </td>
+                      <td>
+                        <input
+                          type="number"
+                          value={section.capacity || 30}
+                          onChange={(e) => updateSection(index, 'capacity', parseInt(e.target.value) || 30)}
+                          placeholder="30"
+                          className="form-control"
+                          style={{ width: '100px' }}
+                          min="1"
+                          max="200"
+                        />
+                      </td>
+                      <td>
+                        <input
+                          type="number"
+                          value={section.room_id || ''}
+                          onChange={(e) => updateSection(index, 'room_id', e.target.value ? parseInt(e.target.value) : undefined)}
+                          placeholder="Room ID"
+                          className="form-control"
+                          style={{ width: '100px' }}
+                        />
+                      </td>
+                      <td>
+                        <button
+                          type="button"
+                          className="icon-btn icon-btn--delete"
+                          onClick={() => removeSection(index)}
+                          data-tooltip="Remove Section"
+                        >
+                          <i className="fa-regular fa-trash-can"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+
+          {sections.length === 0 && (
+            <div style={{ textAlign: 'center', padding: 'var(--spacing-6)', backgroundColor: 'var(--bg-secondary)', borderRadius: 'var(--radius-md)' }}>
+              <i className="fa-regular fa-layer-group" style={{ fontSize: '2rem', color: 'var(--text-secondary)', marginBottom: 'var(--spacing-2)' }}></i>
+              <p style={{ margin: 0, color: 'var(--text-secondary)' }}>No sections defined. Click "Add Section" to create sections.</p>
+            </div>
+          )}
+        </div>
+
+        <div className="info-note" style={{ marginTop: 'var(--spacing-4)', padding: 'var(--spacing-3)', backgroundColor: '#f0f9ff', borderRadius: 'var(--radius-md)', display: 'flex', alignItems: 'center', gap: 'var(--spacing-2)' }}>
+          <i className="fa-solid fa-info-circle" style={{ color: '#0284c7' }}></i>
+          <small style={{ color: '#0369a1' }}>
+            Classes are created in DRAFT status. After creation, you can activate or authorize them to make them available for use.
+          </small>
         </div>
 
         {submitError && (
-          <div className="class-form-error">
+          <div className="form-error">
             <i className="fa-solid fa-circle-exclamation"></i>
             {submitError}
           </div>
         )}
       </div>
 
-      {/* Form Footer - Horizontal layout like Academic Year */}
-      <div className="class-form-footer">
-        <button type="button" className="class-btn-secondary" onClick={onCancel}>
-          <i className="fa-regular fa-times"></i>
-          Cancel
+      <div className="form-footer" style={{ paddingTop: 'var(--spacing-4)', marginTop: 0 }}>
+        <button type="button" className="btn btn-secondary" onClick={onCancel}>
+          <i className="fa-regular fa-times"></i> Cancel
         </button>
         <button 
           type="submit" 
-          className="class-btn-primary"
+          className="btn btn-primary"
           disabled={createMutation.isPending || updateMutation.isPending}
         >
           {(createMutation.isPending || updateMutation.isPending) ? (
             <>
-              <i className="fa-solid fa-spinner fa-spin"></i>
-              Processing...
+              <i className="fa-solid fa-spinner fa-spin"></i> Processing...
             </>
           ) : (
             <>

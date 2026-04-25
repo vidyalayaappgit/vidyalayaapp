@@ -79,3 +79,25 @@ ON academic_years (school_id)
 WHERE is_current = TRUE;
 
 
+
+--Academic Terms
+CREATE TABLE academic_terms (
+    id SERIAL PRIMARY KEY,
+    academic_year_id INTEGER NOT NULL REFERENCES academic_years(id) ON DELETE CASCADE,
+    term_name VARCHAR(100) NOT NULL, -- 'Mid Term', 'Final Term', 'Quarter 1', etc.
+    term_code VARCHAR(20) NOT NULL, -- 'TERM1', 'TERM2', 'TERM3'
+    term_order INTEGER NOT NULL, -- 1, 2, 3 for ordering
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    created_by BIGINT NOT NULL,
+    updated_by BIGINT NOT NULL,
+    created_dt TIMESTAMPTZ DEFAULT NOW(),
+    updated_dt TIMESTAMPTZ DEFAULT NOW(),
+    CONSTRAINT unique_term_per_year UNIQUE(academic_year_id, term_code),
+    CONSTRAINT valid_term_dates CHECK (start_date <= end_date)
+);
+
+-- Indexes
+CREATE INDEX idx_academic_terms_year ON academic_terms(academic_year_id);
+CREATE INDEX idx_academic_terms_dates ON academic_terms(start_date, end_date);
+

@@ -1,5 +1,3 @@
-// academic-years.service.ts
-
 import { Injectable, HttpException, HttpStatus, Logger } from '@nestjs/common';
 import { AcademicYearService } from './academic-year.service';
 import { AcademicYearRecord, AcademicYearListResult } from './academic-year.types';
@@ -29,7 +27,7 @@ export class AcademicYearsService {
   }
 
   /**
-   * Create a new academic year
+   * Create a new academic year (always DRAFT) with optional terms
    */
   async create(data: {
     schoolId: number;
@@ -37,9 +35,8 @@ export class AcademicYearsService {
     yearCode: string;
     startDate: Date;
     endDate: Date;
-    isCurrent?: boolean;
     userId: number;
-    auditUserId?: number;
+    terms?: any[];
   }): Promise<AcademicYearRecord> {
     this.logger.log(`Creating academic year: ${data.yearName} for school ${data.schoolId}`);
     
@@ -50,7 +47,7 @@ export class AcademicYearsService {
   }
 
   /**
-   * Update an existing academic year
+   * Update an existing academic year (only DRAFT or CANCELLED) with optional terms
    */
   async update(data: {
     id: number;
@@ -59,9 +56,8 @@ export class AcademicYearsService {
     yearCode?: string;
     startDate?: Date;
     endDate?: Date;
-    isCurrent?: boolean;
     userId: number;
-    auditUserId?: number;
+    terms?: any[];
   }): Promise<AcademicYearRecord> {
     this.logger.log(`Updating academic year ID: ${data.id}`);
     
@@ -72,13 +68,12 @@ export class AcademicYearsService {
   }
 
   /**
-   * Delete an academic year
+   * Delete an academic year permanently (only DRAFT)
    */
   async delete(data: {
     id: number;
     schoolId: number;
     userId: number;
-    auditUserId?: number;
   }): Promise<AcademicYearRecord> {
     this.logger.log(`Deleting academic year ID: ${data.id}`);
     
@@ -89,18 +84,49 @@ export class AcademicYearsService {
   }
 
   /**
-   * Authorize (activate) an academic year
+   * Activate academic year (DRAFT -> ACTIVE)
    */
-  async authorize(data: {
+  async activate(data: {
     id: number;
     schoolId: number;
     userId: number;
-    auditUserId?: number;
   }): Promise<AcademicYearRecord> {
-    this.logger.log(`Authorizing academic year ID: ${data.id}`);
+    this.logger.log(`Activating academic year ID: ${data.id}`);
     
-    const result = await this.coreService.authorize(data);
-    this.validateResponse(result, 'Authorize');
+    const result = await this.coreService.activate(data);
+    this.validateResponse(result, 'Activate');
+    
+    return result!;
+  }
+
+  /**
+   * Complete academic year (ACTIVE -> COMPLETED)
+   */
+  async complete(data: {
+    id: number;
+    schoolId: number;
+    userId: number;
+  }): Promise<AcademicYearRecord> {
+    this.logger.log(`Completing academic year ID: ${data.id}`);
+    
+    const result = await this.coreService.complete(data);
+    this.validateResponse(result, 'Complete');
+    
+    return result!;
+  }
+
+  /**
+   * Cancel academic year (DRAFT or ACTIVE -> CANCELLED)
+   */
+  async cancel(data: {
+    id: number;
+    schoolId: number;
+    userId: number;
+  }): Promise<AcademicYearRecord> {
+    this.logger.log(`Cancelling academic year ID: ${data.id}`);
+    
+    const result = await this.coreService.cancel(data);
+    this.validateResponse(result, 'Cancel');
     
     return result!;
   }
@@ -111,8 +137,6 @@ export class AcademicYearsService {
   async view(data: {
     schoolId?: number;
     id?: number;
-    statusFilter?: string;
-    includeInactive?: boolean;
     limit?: number;
     offset?: number;
     userId: number;
