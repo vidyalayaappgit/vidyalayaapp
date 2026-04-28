@@ -1,0 +1,14 @@
+# Database (PostgreSQL)
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=postgres
+DB_PASS=1234@abcd
+DB_NAME=schoolapp_db
+
+# JWT Auth
+JWT_SECRET=supersecretkey123
+
+# 🔥 NEW - Required for CORS fix
+PORT=3001
+FRONTEND_URL=http://localhost:3000
+NODE_ENV=development
